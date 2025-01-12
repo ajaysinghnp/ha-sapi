@@ -76,7 +76,7 @@ multidict==6.1.0
 mypy-extensions==1.0.0
 nodeenv==1.9.1
 numpy==2.2.0
-orjson==3.10.12
+orjson==3.10.14
 packaging==24.2
 paho-mqtt==1.6.1
 pathspec==0.12.1
