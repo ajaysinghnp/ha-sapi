@@ -50,7 +50,7 @@ fnvhash==0.1.0
 freezegun==1.5.1
 frozenlist==1.5.0
 gitdb==4.0.11
-GitPython==3.1.41
+GitPython==3.1.44
 h11==0.14.0
 habluetooth==3.8.0
 hass-nabucasa==0.87.0
