@@ -1,0 +1,55 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up SAPI Integration",
+        "description": "Set up your SAPI integration",
+        "data": {
+          "api_key": "API Key",
+          "api_base_url": "API Base URL",
+          "name": "Name",
+          "verify_ssl": "Verify SSL Certificate"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reauthenticate SAPI",
+        "description": "Please enter your new API key",
+        "data": {
+          "api_key": "API Key"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "invalid_ssl": "Invalid SSL certificate",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device is already configured",
+      "reauth_successful": "Reauthorization successful"
+    }
+  },
+  "services": {
+    "generate_password": {
+      "name": "Generate Password",
+      "description": "Generate a secure password"
+    },
+    "generate_pin": {
+      "name": "Generate PIN",
+      "description": "Generate a numeric PIN"
+    },
+    "get_nepali_date": {
+      "name": "Get Nepali Date",
+      "description": "Get current Nepali date"
+    },
+    "convert_date": {
+      "name": "Convert Date",
+      "description": "Convert between Nepali and English dates"
+    },
+    "query_bill": {
+      "name": "Query Bill",
+      "description": "Query utility bill information"
+    }
+  }
+}

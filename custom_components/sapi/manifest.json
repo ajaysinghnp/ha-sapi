@@ -1,0 +1,16 @@
+{
+  "domain": "sapi",
+  "name": "SAPI",
+  "documentation": "https://github.com/ajaysinghnp/ha-sapi",
+  "issue_tracker": "https://github.com/ajaysinghnp/ha-sapi/issues",
+  "dependencies": [],
+  "codeowners": [
+    "@ajaysinghnp"
+  ],
+  "requirements": [
+    "requests>=2.31.0"
+  ],
+  "iot_class": "cloud_polling",
+  "version": "0.0.1",
+  "config_flow": true
+}

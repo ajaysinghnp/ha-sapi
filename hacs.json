@@ -1,0 +1,8 @@
+{
+  "name": "SAPI",
+  "render_readme": true,
+  "domains": [
+    "sapi"
+  ],
+  "homeassistant": "2024.1.0"
+}
