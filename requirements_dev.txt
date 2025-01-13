@@ -118,7 +118,7 @@ pytz==2024.2
 PyYAML==6.0.2
 requests==2.32.3
 requests-mock==1.12.1
-respx==0.21.1
+respx==0.22.0
 s3transfer==0.10.4
 securetar==2024.11.0
 setuptools==69.0.3
