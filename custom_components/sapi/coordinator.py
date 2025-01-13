@@ -19,7 +19,11 @@ from .const import (
     API_ENDPOINT_DATE_TODAY,
     API_ENDPOINT_GENERATE_PASSWORD,
     API_ENDPOINT_GENERATE_PIN,
-    API_ENDPOINT_NEA_ALL
+    API_ENDPOINT_NEA_ALL,
+    SERVICE_DATE_TODAY,
+    SERVICE_NEA_HOME,
+    SERVICE_NEA_AGRI,
+    SERVICE_API_HEALTH
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -44,8 +48,8 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         )
 
         self.api_key = api_key
-        self.api_base_url = api_base_url.rstrip(
-            "/")  # Remove trailing slash if present
+        # Remove trailing slash if present
+        self.api_base_url = api_base_url.rstrip("/")
         self.verify_ssl = verify_ssl
         self.session = aiohttp.ClientSession()
         self._latest_data: Dict[str, Any] = {}
@@ -68,6 +72,7 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
     async def _fetch_data(self) -> Dict[str, Any]:
         """Fetch data from multiple SAPI endpoints."""
         tasks = [
+            self._fetch_health(),
             self._fetch_date_today(),
             self._fetch_nea_bills_summary(),
         ]
@@ -78,19 +83,46 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
 
         # Process results and handle any individual endpoint failures
         if isinstance(results[0], Exception):
-            _LOGGER.error("Failed to fetch Today's date: %s", results[0])
-            data["date_today"] = self._latest_data.get("date_today", {})
+            _LOGGER.error("Failed to fetch APIs Health: %s", results[0])
+            data[SERVICE_API_HEALTH] = self._latest_data.get(
+                SERVICE_API_HEALTH, {})
         else:
-            data["date_today"] = results[0]
+            data[SERVICE_API_HEALTH] = results[0]["Health"] == "I am alive!"
 
         if isinstance(results[1], Exception):
-            _LOGGER.error("Failed to fetch NEA bills summary: %s", results[1])
-            data["nea_all_bills"] = self._latest_data.get("nea_all_bills", {})
+            _LOGGER.error("Failed to fetch Today's date: %s", results[1])
+            data[SERVICE_DATE_TODAY] = self._latest_data.get(
+                SERVICE_DATE_TODAY, {})
+            data[f"{SERVICE_DATE_TODAY}_attributes"] = self._latest_data.get(
+                f"{SERVICE_DATE_TODAY}_attributes", {})
         else:
-            data["nea_all_bills"] = results[1]
+            data[SERVICE_DATE_TODAY] = results[1].pop('full_nep_date_nep')
+            data[f"{SERVICE_DATE_TODAY}_attributes"] = results[1]
+
+        if isinstance(results[2], Exception):
+            _LOGGER.error("Failed to fetch NEA bills summary: %s", results[2])
+            data[SERVICE_NEA_HOME] = self._latest_data.get(
+                SERVICE_NEA_HOME, {})
+            data[f"{SERVICE_NEA_HOME}_attributes"] = self._latest_data.get(
+                f"{SERVICE_NEA_HOME}_attributes", {})
+            data[SERVICE_NEA_AGRI] = self._latest_data.get(
+                SERVICE_NEA_AGRI, {})
+            data[f"{SERVICE_NEA_AGRI}_attributes"] = self._latest_data.get(
+                f"{SERVICE_NEA_AGRI}_attributes", {})
+        else:
+            data[SERVICE_NEA_HOME] = results[2][0].pop("state")
+            results[2][0].pop("raw_data")
+            data[f"{SERVICE_NEA_HOME}_attributes"] = results[2][0]
+            data[SERVICE_NEA_AGRI] = results[2][1].pop("state")
+            results[2][1].pop("raw_data")
+            data[f"{SERVICE_NEA_AGRI}_attributes"] = results[2][0]
 
         self._latest_data = data
         return data
+
+    async def _fetch_health(self) -> Dict[str, Any]:
+        """Fetch health information."""
+        return await self._private_api_call("/")
 
     async def _fetch_date_today(self) -> Dict[str, Any]:
         """Fetch current Nepali date information."""
@@ -143,14 +175,12 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
     # async def async_generate_password(self, length: int = 12, include_special: bool = True) -> str:
     async def async_generate_password(self) -> str:
         """Generate a password using SAPI."""
-        result = await self._private_api_call(API_ENDPOINT_GENERATE_PASSWORD, method="GET")
-        return result.get("password", "")
+        return await self._private_api_call(API_ENDPOINT_GENERATE_PASSWORD, method="GET")
 
     # async def async_generate_pin(self, length: int = 6) -> str:
     async def async_generate_pin(self, _: int = 6) -> str:
         """Generate a PIN using SAPI."""
-        result = await self._private_api_call(API_ENDPOINT_GENERATE_PIN, method="GET")
-        return result.get("pin", "")
+        return await self._private_api_call(API_ENDPOINT_GENERATE_PIN, method="GET")
 
     async def close(self) -> None:
         """Close the HTTP session."""

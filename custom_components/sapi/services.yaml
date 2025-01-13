@@ -1,18 +1,26 @@
+date_today:
+  name: Get Nepali Date
+  description: Get current Nepali date
+  fields: {}
+
 generate_password:
   name: Generate Password
-  description: Generate a secure password with specified parameters
+  description: Generate a new password with specified parameters
   fields:
     length:
       name: Length
-      description: Length of the password
-      required: true
+      description: Length of the password to generate
+      required: false
+      default: 12
+      example: 12
       selector:
         number:
           min: 8
           max: 64
+          mode: box
     include_special:
       name: Include Special Characters
-      description: Include special characters in password
+      description: Whether to include special characters in the password
       required: false
       default: true
       selector:
@@ -25,55 +33,10 @@ generate_pin:
     length:
       name: Length
       description: Length of the PIN
-      required: true
+      required: false
+      default: 4
+      example: 4
       selector:
         number:
           min: 4
           max: 12
-
-get_nepali_date:
-  name: Get Nepali Date
-  description: Get current Nepali date
-  fields: {}
-
-convert_date:
-  name: Convert Date
-  description: Convert between Nepali and English dates
-  fields:
-    date:
-      name: Date
-      description: Date to convert (YYYY-MM-DD)
-      required: true
-      example: "2024-01-12"
-      selector:
-        text:
-    from_type:
-      name: From Type
-      description: Source calendar type
-      required: true
-      selector:
-        select:
-          options:
-            - "nepali"
-            - "english"
-
-query_bill:
-  name: Query Bill
-  description: Query utility bill information
-  fields:
-    meter_number:
-      name: Meter Number
-      description: Utility meter number
-      required: true
-      selector:
-        text:
-    bill_type:
-      name: Bill Type
-      description: Type of utility bill
-      required: true
-      selector:
-        select:
-          options:
-            - "electricity"
-            - "water"
-            - "telephone"

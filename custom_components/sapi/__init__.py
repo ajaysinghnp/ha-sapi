@@ -32,7 +32,10 @@ from .const import (
     ATTR_PASSWORD,
     ATTR_LENGTH,
     ATTR_INCLUDE_SPECIAL,
-    ATTR_PIN
+    ATTR_PIN,
+    SERVICE_DATE_TODAY,
+    SERVICE_GENERATE_PASSWORD,
+    SERVICE_GENERATE_PIN
 )
 from .coordinator import SAPIDataUpdateCoordinator
 
@@ -43,30 +46,6 @@ PLATFORMS: list[Platform] = [
     Platform.SENSOR,
     Platform.BINARY_SENSOR,
 ]
-
-# Service schemas
-GENERATE_PASSWORD_SCHEMA = vol.Schema(
-    {
-        vol.Optional(ATTR_LENGTH, default=12): vol.All(
-            vol.Coerce(int), vol.Range(min=8, max=64)
-        ),
-        vol.Optional(ATTR_INCLUDE_SPECIAL, default=True): cv.boolean,
-    }
-)
-
-GENERATE_PIN_SCHEMA = vol.Schema(
-    {
-        vol.Optional(ATTR_LENGTH, default=4): vol.All(
-            vol.Coerce(int), vol.Range(min=4, max=12)
-        ),
-    }
-)
-
-CONVERT_DATE_SCHEMA = vol.Schema(
-    {
-        vol.Required(ATTR_DATE): cv.string
-    }
-)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -94,6 +73,17 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     # Register services
+    async def get_date_today(_: ServiceCall) -> None:
+        """Handle Today date service call."""
+        try:
+            data = coordinator.get_cached_data(SERVICE_DATE_TODAY)
+            # print(f"Storing Nepali Date in to state: {data}")
+            if data:
+                hass.states.async_set(
+                    f"sensor.{SERVICE_DATE_TODAY}", data[SERVICE_DATE_TODAY])
+        except Exception as err:  # pylint: disable=broad-except
+            _LOGGER.error("Failed to get Today date: %s", err)
+
     async def generate_password(call: ServiceCall) -> None:
         """Handle password generation service call."""
         length = call.data.get(ATTR_LENGTH, 12)
@@ -101,12 +91,15 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
         try:
             result = await coordinator.async_generate_password(
-                length=length,
-                include_special=include_special
+                # length=length,
+                # include_special=include_special
             )
-            _LOGGER.debug("Generated password with length %s", length)
+            _LOGGER.debug(
+                "Generated password with length %s with special %s", length, include_special)
             # Store the result in hass.states
-            hass.states.async_set(f"{DOMAIN}.last_generated_password", result)
+            # print(f"Storing Generated password in to state: {result}")
+            hass.states.async_set(
+                f"{DOMAIN}.{SERVICE_GENERATE_PASSWORD}", result.pop("password"))
         except Exception as err:  # pylint: disable=broad-except
             _LOGGER.error("Failed to generate password: %s", err)
 
@@ -115,40 +108,30 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         length = call.data.get(ATTR_LENGTH, 6)
 
         try:
-            result = await coordinator.async_generate_pin(length=length)
+            result = await coordinator.async_generate_pin()
             _LOGGER.debug("Generated PIN with length %s", length)
-            hass.states.async_set(f"{DOMAIN}.last_generated_pin", result)
+            # print(f"Storing Generated PIN in to state: {result}")
+            hass.states.async_set(
+                f"{DOMAIN}.{SERVICE_GENERATE_PIN}", result.pop("pin"))
         except Exception as err:  # pylint: disable=broad-except
             _LOGGER.error("Failed to generate PIN: %s", err)
-
-    async def get_date_today(_: ServiceCall) -> None:
-        """Handle Today date service call."""
-        try:
-            data = coordinator.get_cached_data("date_today")
-            if data:
-                hass.states.async_set(
-                    f"{DOMAIN}.date_today", data["date"])
-        except Exception as err:  # pylint: disable=broad-except
-            _LOGGER.error("Failed to get Today date: %s", err)
 
     # Register all services
     hass.services.async_register(
         DOMAIN,
-        API_ENDPOINT_GENERATE_PASSWORD,
+        SERVICE_GENERATE_PASSWORD,
         generate_password,
-        schema=GENERATE_PASSWORD_SCHEMA,
     )
 
     hass.services.async_register(
         DOMAIN,
-        API_ENDPOINT_GENERATE_PIN,
+        SERVICE_GENERATE_PIN,
         generate_pin,
-        schema=GENERATE_PIN_SCHEMA,
     )
 
     hass.services.async_register(
         DOMAIN,
-        API_ENDPOINT_DATE_TODAY,
+        SERVICE_DATE_TODAY,
         get_date_today,
     )
 
@@ -172,9 +155,9 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # Remove services if this is the last entry
         if not hass.data[DOMAIN]:
             for service in [
-                API_ENDPOINT_GENERATE_PASSWORD,
-                API_ENDPOINT_GENERATE_PIN,
-                API_ENDPOINT_DATE_TODAY
+                SERVICE_GENERATE_PASSWORD,
+                SERVICE_GENERATE_PIN,
+                SERVICE_DATE_TODAY
             ]:
                 hass.services.async_remove(DOMAIN, service)
 
