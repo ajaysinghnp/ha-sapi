@@ -23,6 +23,9 @@ from .const import (
     DEFAULT_VERIFY_SSL,
 )
 
+VERSION = 1
+MINOR_VERSION = 1
+
 _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
@@ -82,8 +85,6 @@ async def validate_api(
 
 class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for SAPI."""
-
-    VERSION = 1
 
     def is_matching(self, other_flow: dict[str, Any]) -> bool:
         """Check if the user input matches the existing configuration."""

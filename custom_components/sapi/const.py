@@ -7,8 +7,8 @@ VERSION: Final = "0.0.1"
 AUTHOR: Final = "Ajay Singh"
 
 # Configuration
-CONF_API_KEY = "mayasapi_key"
-CONF_API_BASE_URL = "mayasapi_base_url"
+CONF_API_KEY = "api_key"
+CONF_API_BASE_URL = "api_base_url"
 DEVICE_CLASS_BINARY = "SapiBinarySensor"
 
 # Defaults

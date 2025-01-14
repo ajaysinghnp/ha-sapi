@@ -54,6 +54,17 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         self.session = aiohttp.ClientSession()
         self._latest_data: Dict[str, Any] = {}
 
+    # async def _async_setup(self):
+    #     """Set up the coordinator
+
+    #     This is the place to set up your coordinator,
+    #     or to load data, that only needs to be loaded once.
+
+    #     This method will be called automatically during
+    #     coordinator.async_config_entry_first_refresh.
+    #     """
+    #     pass
+
     async def _async_update_data(self) -> Dict[str, Any]:
         """Fetch data from SAPI."""
         try:
@@ -132,7 +143,11 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         """Fetch bills summary information."""
         return await self._private_api_call(API_ENDPOINT_NEA_ALL)
 
-    async def _private_api_call(self, endpoint: str, method: str = "GET", data: Optional[Dict] = None) -> Dict[str, Any]:
+    async def _private_api_call(
+            self, endpoint: str,
+            method: str = "GET",
+            data: Optional[Dict] = None
+    ) -> Dict[str, Any]:
         """Make an API call to SAPI."""
         headers = {
             "X-API-Key": f"{self.api_key}",

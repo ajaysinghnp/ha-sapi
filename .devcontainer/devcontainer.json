@@ -32,7 +32,9 @@
         "ms-python.black-formatter",
         "ms-python.isort",
         "ms-python.python",
-        "ryanluker.vscode-coverage-gutters"
+        "ryanluker.vscode-coverage-gutters",
+        "DavidAnson.vscode-markdownlint",
+        "yzhang.markdown-all-in-one"
       ],
       "settings": {
         "python.linting.enabled": true,
