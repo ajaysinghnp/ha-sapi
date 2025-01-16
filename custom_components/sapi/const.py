@@ -18,6 +18,7 @@ DEFAULT_TIMEOUT = 10  # seconds
 DEFAULT_UPDATE_INTERVAL = 1800  # 30 minutes
 
 # API Endpoints
+API_PREFIX = "/ha"
 API_ENDPOINT_DATE_TODAY = "/date/today"
 API_ENDPOINT_DATE_TO_NEPALI = "date/to/nep"
 API_ENDPOINT_DATE_TO_INT = "date/to/int"

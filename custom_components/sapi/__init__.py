@@ -17,6 +17,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.exceptions import ConfigEntryNotReady
 
 from .const import (
+    API_PREFIX,
     DOMAIN,
     CONF_API_BASE_URL,
     API_ENDPOINT_GENERATE_PASSWORD,
@@ -54,7 +55,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     coordinator = SAPIDataUpdateCoordinator(
         hass,
         entry.data[CONF_API_KEY],
-        entry.data[CONF_API_BASE_URL],
+        f"{entry.data[CONF_API_BASE_URL]}{API_PREFIX}",
         entry.data.get(CONF_VERIFY_SSL, True),
     )
 

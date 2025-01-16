@@ -17,14 +17,12 @@ from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
 
 from .const import (
+    API_PREFIX,
     DOMAIN,
     CONF_API_BASE_URL,
     DEFAULT_NAME,
     DEFAULT_VERIFY_SSL,
 )
-
-VERSION = 1
-MINOR_VERSION = 1
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -40,24 +38,30 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
 
 async def validate_api(
         hass: HomeAssistant,
-        # api_key: str,
+        api_key: str,
         api_base_url: str,
         verify_ssl: bool
 ) -> bool:
     """Validate that API is working and healthy."""
     try:
+        _headers = {
+            "X-API-Key": f"{api_key}",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        }
+
         # Make the validation call in a non-blocking way
         response = await hass.async_add_executor_job(
             lambda: requests.get(
                 f"{api_base_url}",
-                # headers={"Authorization": f"Bearer {api_key}"},
+                headers=_headers,
                 verify=verify_ssl,
                 timeout=10,
             )
         )
 
         response.raise_for_status()
-        return response.status_code == 200
+        return response.json()
 
     except requests.exceptions.SSLError as exc:
         _LOGGER.error("SSL verification failed")
@@ -86,6 +90,13 @@ async def validate_api(
 class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for SAPI."""
 
+    def __init__(self):
+        """Initialize the config flow."""
+        self.api_key: str = ""
+        self._base_url: str = ""
+        self._info: dict[str, Any] | None = None
+        super().__init__()
+
     def is_matching(self, other_flow: dict[str, Any]) -> bool:
         """Check if the user input matches the existing configuration."""
         existing_entry = self._async_current_entries()
@@ -102,9 +113,14 @@ class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             try:
-                await validate_api(
+                self._base_url = f"{
+                    user_input[CONF_API_BASE_URL].rstrip("/")}{API_PREFIX.rstrip("/")}"
+                self.api_key = user_input[CONF_API_KEY]
+
+                self._info = await validate_api(
                     self.hass,
-                    user_input[CONF_API_BASE_URL],
+                    self.api_key,
+                    f"{self._base_url}/info",
                     user_input.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
                 )
 
@@ -152,10 +168,11 @@ class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             try:
-                await validate_api(
+                self._info = await validate_api(
                     self.hass,
-                    entry.data[CONF_API_BASE_URL],
-                    entry.data.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
+                    self.api_key,
+                    f"{self._base_url}/info",
+                    user_input.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
                 )
 
                 self.hass.config_entries.async_update_entry(

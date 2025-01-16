@@ -65,13 +65,15 @@ class SAPIBinarySensor(CoordinatorEntity, BinarySensorEntity):
         super().__init__(coordinator)
         self.entity_description = description
         self._attr_unique_id = f"{entry_id}_{description.key}"
+        self.info = coordinator._get_info()
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry_id)},
-            "name": "SAPI Integration",
-            "manufacturer": AUTHOR,
-            "model": "S-API",
-            "sw_version": VERSION,
+            "name": f"{self.info["app_name"]} Integration",
+            "manufacturer": self.info["app_author"],
+            "model": self.info["app_name"],
+            "sw_version": self.info["app_version"],
         }
+        return None
 
     @property
     def is_on(self) -> bool | None:
