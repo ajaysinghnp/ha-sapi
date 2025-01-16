@@ -3,7 +3,7 @@ from typing import Final
 
 DOMAIN: Final = "sapi"
 NAME: Final = "SAPI"
-VERSION: Final = "0.0.1"
+VERSION: Final = "0.1.1"
 AUTHOR: Final = "Ajay Singh"
 
 # Configuration
