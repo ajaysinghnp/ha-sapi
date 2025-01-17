@@ -25,6 +25,32 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Services:
+    """
+    Services class to handle various service calls for a Home Assistant integration.
+
+    This class provides methods to handle specific service calls, such as fetching
+    today's date, generating a random password, or generating a random PIN. The results
+    are stored in Home Assistant's state for further use.
+
+    Attributes:
+        hass: The Home Assistant core object used to interact with its state and services.
+        coordinator: A data coordinator responsible for fetching or generating the data.
+
+    Methods:
+        get_date_today(_: ServiceCall) -> None:
+            Handles the "Today date" service call. Fetches today's date using the coordinator
+            and stores it in the Home Assistant state.
+
+        generate_password(call: ServiceCall) -> None:
+            Handles the password generation service call. Generates a password with optional
+            parameters for length and inclusion of special characters and stores it in the
+            Home Assistant state.
+
+        generate_pin(call: ServiceCall) -> None:
+            Handles the PIN generation service call. Generates a numeric PIN of a specified
+            length and stores it in the Home Assistant state.
+    """
+
     def __init__(self, coordinator, hass):
         self.hass = hass
         self.coordinator = coordinator
