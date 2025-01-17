@@ -1,8 +1,12 @@
 {
   "name": "SAPI",
   "render_readme": true,
+  "filename": "sapi.zip",
   "domains": [
     "sapi"
   ],
-  "homeassistant": "2024.1.0"
+  "homeassistant": "2024.1.0",
+  "frontend_elements": [
+    "pan-details-card"
+  ]
 }
