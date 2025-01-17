@@ -22,20 +22,6 @@ from .const import (
     API_PREFIX,
     DOMAIN,
     CONF_API_BASE_URL,
-    API_ENDPOINT_GENERATE_PASSWORD,
-    API_ENDPOINT_GENERATE_PIN,
-    API_ENDPOINT_DATE_TODAY,
-    ATTR_DATE,
-    API_ENDPOINT_DATE_TO_NEPALI,
-    API_ENDPOINT_DATE_TO_INT,
-    API_ENDPOINT_UTILITIES_FORMAT_NUMBER,
-    API_ENDPOINT_PAN_DETAILS,
-    API_ENDPOINT_NEA_ALL,
-    ATTR_NEPALI_DATE,
-    ATTR_PASSWORD,
-    ATTR_LENGTH,
-    ATTR_INCLUDE_SPECIAL,
-    ATTR_PIN,
     SERVICE_DATE_TODAY,
     SERVICE_GENERATE_PASSWORD,
     SERVICE_GENERATE_PIN
@@ -87,12 +73,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         DOMAIN,
         SERVICE_GENERATE_PASSWORD,
         services.generate_password,
+        supports_response=True,
     )
 
     hass.services.async_register(
         DOMAIN,
         SERVICE_GENERATE_PIN,
         services.generate_pin,
+        supports_response=True,
     )
 
     # Entry update listener

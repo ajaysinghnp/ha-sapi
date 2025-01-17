@@ -9,6 +9,7 @@ Services:
 
 import logging
 from homeassistant.core import HomeAssistant, ServiceCall
+from homeassistant.util.json import JsonObjectType
 
 from .coordinator import SAPIDataUpdateCoordinator
 
@@ -67,7 +68,7 @@ class Services:
         except Exception as err:  # pylint: disable=broad-except
             _LOGGER.error("Failed to get Today date: %s", err)
 
-    async def generate_password(self, call: ServiceCall) -> None:
+    async def generate_password(self, call: ServiceCall) -> JsonObjectType:
         """Handle password generation service call."""
         length = call.data.get(ATTR_LENGTH, 12)
         include_special = call.data.get(ATTR_INCLUDE_SPECIAL, True)
@@ -82,11 +83,12 @@ class Services:
             # Store the result in hass.states
             # print(f"Storing Generated password in to state: {result}")
             self.hass.states.async_set(
-                f"{DOMAIN}.{SERVICE_GENERATE_PASSWORD}", result.pop("password"))
+                f"{DOMAIN}.{SERVICE_GENERATE_PASSWORD}", result.get("password"))
+            return dict(result)
         except Exception as err:  # pylint: disable=broad-except
             _LOGGER.error("Failed to generate password: %s", err)
 
-    async def generate_pin(self, call: ServiceCall) -> None:
+    async def generate_pin(self, call: ServiceCall) -> JsonObjectType:
         """Handle PIN generation service call."""
         length = call.data.get(ATTR_LENGTH, 6)
 
@@ -95,6 +97,7 @@ class Services:
             _LOGGER.debug("Generated PIN with length %s", length)
             # print(f"Storing Generated PIN in to state: {result}")
             self.hass.states.async_set(
-                f"{DOMAIN}.{SERVICE_GENERATE_PIN}", result.pop("pin"))
+                f"{DOMAIN}.{SERVICE_GENERATE_PIN}", result.get("pin"))
+            return dict(result)
         except Exception as err:  # pylint: disable=broad-except
             _LOGGER.error("Failed to generate PIN: %s", err)
