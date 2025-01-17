@@ -3,7 +3,7 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
-## [1.1.0] - 2025-01-17
+## [0.0.4] - 2025-01-17
 
 ### Added
 
@@ -16,7 +16,7 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 - Improved API endpoint handling with better app info integration
 - Enhanced devcontainer configuration for better development experience
 
-## [1.0.0] - 2025-01-14
+## [0.0.3] - 2025-01-14
 
 ### Added
 
@@ -32,7 +32,7 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 - Enhanced error handling and logging
 - Improved state management
 
-## [0.2.0] - 2025-01-13
+## [0.0.2] - 2025-01-13
 
 ### Added
 
@@ -48,7 +48,7 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 
 - Dependencies updated to latest secure versions
 
-## [0.1.0] - 2025-01-13
+## [0.0.1] - 2025-01-13
 
 ### Added
 
