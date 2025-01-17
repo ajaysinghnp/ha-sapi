@@ -16,6 +16,8 @@ from homeassistant.core import HomeAssistant, ServiceCall
 import homeassistant.helpers.config_validation as cv
 from homeassistant.exceptions import ConfigEntryNotReady
 
+from .services import Services
+
 from .const import (
     API_PREFIX,
     DOMAIN,
@@ -73,67 +75,24 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     # Set up platforms
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-    # Register services
-    async def get_date_today(_: ServiceCall) -> None:
-        """Handle Today date service call."""
-        try:
-            data = coordinator.get_cached_data(SERVICE_DATE_TODAY)
-            # print(f"Storing Nepali Date in to state: {data}")
-            if data:
-                hass.states.async_set(
-                    f"sensor.{SERVICE_DATE_TODAY}", data[SERVICE_DATE_TODAY])
-        except Exception as err:  # pylint: disable=broad-except
-            _LOGGER.error("Failed to get Today date: %s", err)
-
-    async def generate_password(call: ServiceCall) -> None:
-        """Handle password generation service call."""
-        length = call.data.get(ATTR_LENGTH, 12)
-        include_special = call.data.get(ATTR_INCLUDE_SPECIAL, True)
-
-        try:
-            result = await coordinator.async_generate_password(
-                # length=length,
-                # include_special=include_special
-            )
-            _LOGGER.debug(
-                "Generated password with length %s with special %s", length, include_special)
-            # Store the result in hass.states
-            # print(f"Storing Generated password in to state: {result}")
-            hass.states.async_set(
-                f"{DOMAIN}.{SERVICE_GENERATE_PASSWORD}", result.pop("password"))
-        except Exception as err:  # pylint: disable=broad-except
-            _LOGGER.error("Failed to generate password: %s", err)
-
-    async def generate_pin(call: ServiceCall) -> None:
-        """Handle PIN generation service call."""
-        length = call.data.get(ATTR_LENGTH, 6)
-
-        try:
-            result = await coordinator.async_generate_pin()
-            _LOGGER.debug("Generated PIN with length %s", length)
-            # print(f"Storing Generated PIN in to state: {result}")
-            hass.states.async_set(
-                f"{DOMAIN}.{SERVICE_GENERATE_PIN}", result.pop("pin"))
-        except Exception as err:  # pylint: disable=broad-except
-            _LOGGER.error("Failed to generate PIN: %s", err)
-
     # Register all services
+    services = Services(coordinator, hass)
     hass.services.async_register(
         DOMAIN,
         SERVICE_GENERATE_PASSWORD,
-        generate_password,
+        services.generate_password,
     )
 
     hass.services.async_register(
         DOMAIN,
         SERVICE_GENERATE_PIN,
-        generate_pin,
+        services.generate_pin,
     )
 
     hass.services.async_register(
         DOMAIN,
         SERVICE_DATE_TODAY,
-        get_date_today,
+        services.get_date_today,
     )
 
     # Entry update listener
