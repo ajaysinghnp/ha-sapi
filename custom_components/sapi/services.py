@@ -8,7 +8,9 @@ Services:
 """
 
 import logging
-from homeassistant.core import ServiceCall
+from homeassistant.core import HomeAssistant, ServiceCall
+
+from .coordinator import SAPIDataUpdateCoordinator
 
 from .const import (
     SERVICE_DATE_TODAY,
@@ -51,7 +53,7 @@ class Services:
             length and stores it in the Home Assistant state.
     """
 
-    def __init__(self, coordinator, hass):
+    def __init__(self, coordinator: SAPIDataUpdateCoordinator, hass: HomeAssistant) -> None:
         self.hass = hass
         self.coordinator = coordinator
 
@@ -59,10 +61,9 @@ class Services:
         """Handle Today date service call."""
         try:
             data = self.coordinator.get_cached_data(SERVICE_DATE_TODAY)
-            # print(f"Storing Nepali Date in to state: {data}")
             if data:
                 self.hass.states.async_set(
-                    f"sensor.{SERVICE_DATE_TODAY}", data[SERVICE_DATE_TODAY])
+                    f"sensor.{SERVICE_DATE_TODAY}", data)
         except Exception as err:  # pylint: disable=broad-except
             _LOGGER.error("Failed to get Today date: %s", err)
 

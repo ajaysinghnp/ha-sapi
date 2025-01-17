@@ -79,6 +79,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     services = Services(coordinator, hass)
     hass.services.async_register(
         DOMAIN,
+        SERVICE_DATE_TODAY,
+        services.get_date_today,
+    )
+
+    hass.services.async_register(
+        DOMAIN,
         SERVICE_GENERATE_PASSWORD,
         services.generate_password,
     )
@@ -87,12 +93,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         DOMAIN,
         SERVICE_GENERATE_PIN,
         services.generate_pin,
-    )
-
-    hass.services.async_register(
-        DOMAIN,
-        SERVICE_DATE_TODAY,
-        services.get_date_today,
     )
 
     # Entry update listener
