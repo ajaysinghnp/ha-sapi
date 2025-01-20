@@ -26,7 +26,7 @@ bluetooth-adapters==0.20.2
 bluetooth-auto-recovery==1.4.2
 bluetooth-data-tools==1.20.0
 boolean.py==4.0
-boto3==1.35.97
+boto3==1.36.2
 botocore==1.35.97
 btsocket==0.3.0
 certifi==2024.12.14
