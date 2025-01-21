@@ -1,18 +1,18 @@
 {
   "domain": "sapi",
   "name": "SAPI",
-  "version": "0.0.5",
-  "integration_type": "service",
-  "iot_class": "cloud_polling",
+  "codeowners": [
+    "@ajaysinghnp"
+  ],
   "config_flow": true,
   "dependencies": [
     "http"
   ],
+  "documentation": "https://github.com/ajaysinghnp/ha-sapi",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/ajaysinghnp/ha-sapi/issues",
   "requirements": [],
   "single_config_entry": true,
-  "codeowners": [
-    "@ajaysinghnp"
-  ],
-  "documentation": "https://github.com/ajaysinghnp/ha-sapi",
-  "issue_tracker": "https://github.com/ajaysinghnp/ha-sapi/issues"
+  "version": "0.0.5"
 }
