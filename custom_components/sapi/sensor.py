@@ -1,4 +1,5 @@
 """SAPI Integration for Home Assistant - Sensor Platform."""
+
 from __future__ import annotations
 
 import logging
@@ -16,13 +17,7 @@ from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity,
 )
 
-from .const import (
-    DOMAIN,
-    SERVICE_DATE_TODAY,
-    SERVICE_NEA_HOME,
-    SERVICE_NEA_AGRI
-)
-
+from .const import DOMAIN, SERVICE_DATE_TODAY, SERVICE_NEA_AGRI, SERVICE_NEA_HOME
 from .coordinator import SAPIDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -84,7 +79,7 @@ class SAPISensor(CoordinatorEntity, SensorEntity):
         self.info = coordinator._get_info()
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry_id)},
-            "name": f"{self.info["app_name"]} Integration",
+            "name": f"{self.info['app_name']} Integration",
             "manufacturer": self.info["app_author"],
             "model": self.info["app_name"],
             "sw_version": self.info["app_version"],
@@ -103,7 +98,8 @@ class SAPISensor(CoordinatorEntity, SensorEntity):
         """Return additional state attributes."""
         try:
             attributes = self.coordinator.data.get(
-                f"{self.entity_description.key}_attributes", {})
+                f"{self.entity_description.key}_attributes", {}
+            )
             return attributes if isinstance(attributes, dict) else {}
         except (KeyError, AttributeError):
             return {}

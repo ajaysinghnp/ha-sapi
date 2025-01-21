@@ -16,3 +16,4 @@ __pycache__/
 .DS_Store
 Thumbs.db
 go2rtc_linux_amd64
+.ruff_cache/

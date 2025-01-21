@@ -1,31 +1,31 @@
 """DataUpdateCoordinator for SAPI integration."""
+
 from __future__ import annotations
+
+import asyncio
+import logging
 from datetime import timedelta
 from typing import Any, Dict, Optional
-import logging
-import requests
-import asyncio
+
 import aiohttp
 import async_timeout
-
-
+import requests
 from homeassistant.core import HomeAssistant
-from homeassistant.exceptions import ConfigEntryAuthFailed
+from homeassistant.exceptions import ConfigEntryAuthFailed, HomeAssistantError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from homeassistant.exceptions import HomeAssistantError
 
 from .const import (
-    DOMAIN,
-    DEFAULT_TIMEOUT,
-    DEFAULT_UPDATE_INTERVAL,
     API_ENDPOINT_DATE_TODAY,
     API_ENDPOINT_GENERATE_PASSWORD,
     API_ENDPOINT_GENERATE_PIN,
     API_ENDPOINT_NEA_ALL,
+    DEFAULT_TIMEOUT,
+    DEFAULT_UPDATE_INTERVAL,
+    DOMAIN,
+    SERVICE_API_HEALTH,
     SERVICE_DATE_TODAY,
-    SERVICE_NEA_HOME,
     SERVICE_NEA_AGRI,
-    SERVICE_API_HEALTH
+    SERVICE_NEA_HOME,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -122,8 +122,7 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
                 raise ConfigEntryAuthFailed("Invalid authentication") from err
             raise UpdateFailed(f"Error fetching SAPI data: {err}") from err
         except Exception as err:
-            raise UpdateFailed(
-                f"Unexpected error fetching SAPI data: {err}") from err
+            raise UpdateFailed(f"Unexpected error fetching SAPI data: {err}") from err
 
     def _get_info(self) -> Dict[str, Any]:
         """Get information about the SAPI API."""
@@ -131,9 +130,7 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
 
     async def _fetch_data(self) -> Dict[str, Any]:
         """Fetch data from multiple SAPI endpoints."""
-        tasks = [
-            self._fetch_sapi_summary()
-        ]
+        tasks = [self._fetch_sapi_summary()]
 
         results = await asyncio.gather(*tasks, return_exceptions=True)
 
@@ -143,26 +140,26 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         if isinstance(results[0], Exception):
             _LOGGER.error("Failed to fetch Summarized Information")
             data[SERVICE_API_HEALTH] = False
-            data[SERVICE_DATE_TODAY] = self._latest_data.get(
-                SERVICE_DATE_TODAY, {})
+            data[SERVICE_DATE_TODAY] = self._latest_data.get(SERVICE_DATE_TODAY, {})
             data[f"{SERVICE_DATE_TODAY}_attributes"] = self._latest_data.get(
-                f"{SERVICE_DATE_TODAY}_attributes", {})
-            data[SERVICE_NEA_HOME] = self._latest_data.get(
-                SERVICE_NEA_HOME, {})
+                f"{SERVICE_DATE_TODAY}_attributes", {}
+            )
+            data[SERVICE_NEA_HOME] = self._latest_data.get(SERVICE_NEA_HOME, {})
             data[f"{SERVICE_NEA_HOME}_attributes"] = self._latest_data.get(
-                f"{SERVICE_NEA_HOME}_attributes", {})
-            data[SERVICE_NEA_AGRI] = self._latest_data.get(
-                SERVICE_NEA_AGRI, {})
+                f"{SERVICE_NEA_HOME}_attributes", {}
+            )
+            data[SERVICE_NEA_AGRI] = self._latest_data.get(SERVICE_NEA_AGRI, {})
             data[f"{SERVICE_NEA_AGRI}_attributes"] = self._latest_data.get(
-                f"{SERVICE_NEA_AGRI}_attributes", {})
+                f"{SERVICE_NEA_AGRI}_attributes", {}
+            )
         else:
             _LOGGER.info("Summary refreshed successfully!")
             data[SERVICE_API_HEALTH] = True
 
-            today = results[0].get('today')
-            bills = results[0].get('bills')
+            today = results[0].get("today")
+            bills = results[0].get("bills")
 
-            data[SERVICE_DATE_TODAY] = today.pop('full_nep_date_nep')
+            data[SERVICE_DATE_TODAY] = today.pop("full_nep_date_nep")
             data[f"{SERVICE_DATE_TODAY}_attributes"] = today
 
             data[SERVICE_NEA_HOME] = bills[0].pop("state")
@@ -191,9 +188,7 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         return await self._private_api_call(API_ENDPOINT_NEA_ALL)
 
     async def _private_api_call(
-            self, endpoint: str,
-            method: str = "GET",
-            data: Optional[Dict] = None
+        self, endpoint: str, method: str = "GET", data: Optional[Dict] = None
     ) -> Dict[str, Any]:
         """Make an API call to SAPI."""
 
@@ -226,13 +221,14 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         except asyncio.TimeoutError as err:
             raise UpdateFailed(f"API call timed out: {err}") from err
         except Exception as err:
-            raise UpdateFailed(
-                f"Unexpected error during API call: {err}") from err
+            raise UpdateFailed(f"Unexpected error during API call: {err}") from err
 
     # async def async_generate_password(self, length: int = 12, include_special: bool = True) -> str:
     async def async_generate_password(self) -> str:
         """Generate a password using SAPI."""
-        return await self._private_api_call(API_ENDPOINT_GENERATE_PASSWORD, method="GET")
+        return await self._private_api_call(
+            API_ENDPOINT_GENERATE_PASSWORD, method="GET"
+        )
 
     # async def async_generate_pin(self, length: int = 6) -> str:
     async def async_generate_pin(self, _: int = 6) -> str:

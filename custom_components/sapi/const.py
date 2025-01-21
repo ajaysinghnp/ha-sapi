@@ -1,7 +1,8 @@
 """Constants for the SAPI integration."""
-from typing import Final
+
 import json
 from pathlib import Path
+from typing import Final
 
 # Get the path to manifest.json
 MANIFEST_PATH = Path(__file__).parent / "manifest.json"

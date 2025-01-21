@@ -1,4 +1,5 @@
 """The SAPI integration."""
+
 from __future__ import annotations
 
 import logging
@@ -12,18 +13,17 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
-from .services import Services
-
+from .cards import register_cards
 from .const import (
     API_PREFIX,
-    DOMAIN,
     CONF_API_BASE_URL,
+    DOMAIN,
     SERVICE_DATE_TODAY,
     SERVICE_GENERATE_PASSWORD,
-    SERVICE_GENERATE_PIN
+    SERVICE_GENERATE_PIN,
 )
 from .coordinator import SAPIDataUpdateCoordinator
-from .cards import register_cards
+from .services import Services
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -105,7 +105,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             for service in [
                 SERVICE_GENERATE_PASSWORD,
                 SERVICE_GENERATE_PIN,
-                SERVICE_DATE_TODAY
+                SERVICE_DATE_TODAY,
             ]:
                 hass.services.async_remove(DOMAIN, service)
 

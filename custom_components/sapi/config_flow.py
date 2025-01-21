@@ -1,11 +1,12 @@
 """Config flow for SAPI integration."""
+
 from __future__ import annotations
 
 import logging
 from typing import Any
-import voluptuous as vol
-import requests
 
+import requests
+import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.const import (
     CONF_API_KEY,
@@ -18,10 +19,10 @@ from homeassistant.exceptions import HomeAssistantError
 
 from .const import (
     API_PREFIX,
-    DOMAIN,
     CONF_API_BASE_URL,
     DEFAULT_NAME,
     DEFAULT_VERIFY_SSL,
+    DOMAIN,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,10 +38,7 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
 
 
 async def validate_api(
-        hass: HomeAssistant,
-        api_key: str,
-        api_base_url: str,
-        verify_ssl: bool
+    hass: HomeAssistant, api_key: str, api_base_url: str, verify_ssl: bool
 ) -> bool:
     """Validate that API is working and healthy."""
     try:
@@ -115,8 +113,9 @@ class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             try:
-                self._base_url = f"{
-                    user_input[CONF_API_BASE_URL].rstrip("/")}{API_PREFIX.rstrip("/")}"
+                self._base_url = f"{user_input[CONF_API_BASE_URL].rstrip('/')}{
+                    API_PREFIX.rstrip('/')
+                }"
                 self.api_key = user_input[CONF_API_KEY]
 
                 self._info = await validate_api(
@@ -135,7 +134,9 @@ class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     data={
                         CONF_API_KEY: user_input[CONF_API_KEY],
                         CONF_API_BASE_URL: user_input[CONF_API_BASE_URL],
-                        CONF_VERIFY_SSL: user_input.get(CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL),
+                        CONF_VERIFY_SSL: user_input.get(
+                            CONF_VERIFY_SSL, DEFAULT_VERIFY_SSL
+                        ),
                     },
                 )
 
@@ -165,8 +166,7 @@ class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     ) -> FlowResult:
         """Handle reauthorization confirmation."""
         errors: dict[str, str] = {}
-        entry = self.hass.config_entries.async_get_entry(
-            self.context["entry_id"])
+        entry = self.hass.config_entries.async_get_entry(self.context["entry_id"])
 
         if user_input is not None:
             try:

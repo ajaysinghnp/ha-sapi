@@ -1,3 +1,6 @@
+---
+# Define services for the SAPI integration
+
 date_today:
   name: Get Nepali Date
   description: Get current Nepali date
