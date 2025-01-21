@@ -60,6 +60,12 @@ jobs:
         id: bump_version
         run: |
           latest_version=${latest_tag#v}
+
+          # Ensure valid version format
+          if [[ ! "$latest_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            latest_version="0.0.0"
+          fi
+
           IFS='.' read -r major minor patch <<< "$latest_version"
 
           case "${{ steps.bump_type.outputs.type }}" in
