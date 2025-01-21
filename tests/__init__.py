@@ -1,1 +1,1 @@
-""" Tests for the integration. """
+"""Tests for the integration."""
