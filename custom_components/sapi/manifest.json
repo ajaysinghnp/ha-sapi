@@ -5,8 +5,9 @@
   "integration_type": "service",
   "iot_class": "cloud_polling",
   "config_flow": true,
-  "frontend_path": "frontend",
-  "dependencies": [],
+  "dependencies": [
+    "http"
+  ],
   "requirements": [],
   "single_config_entry": true,
   "codeowners": [
