@@ -24,6 +24,7 @@ from .const import (
     SERVICE_GENERATE_PIN
 )
 from .coordinator import SAPIDataUpdateCoordinator
+from .cards import register_cards
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -79,6 +80,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         services.generate_pin,
         supports_response=True,
     )
+
+    # Register cards
+    await register_cards(hass, DOMAIN)
 
     # Entry update listener
     entry.async_on_unload(entry.add_update_listener(update_listener))
