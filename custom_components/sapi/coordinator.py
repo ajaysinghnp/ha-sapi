@@ -1,13 +1,13 @@
 """DataUpdateCoordinator for SAPI integration."""
 from __future__ import annotations
-import requests
+from datetime import timedelta
+from typing import Any, Dict, Optional
 import logging
+import requests
 import asyncio
 import aiohttp
 import async_timeout
 
-from datetime import timedelta
-from typing import Any, Dict, Optional
 
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
@@ -84,6 +84,7 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
 
             response.raise_for_status()
             self.info = response.json()
+            _LOGGER.info("SAPI data refreshed successfully")
             return
 
         except requests.exceptions.SSLError as exc:

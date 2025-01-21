@@ -15,7 +15,7 @@ from homeassistant.helpers.update_coordinator import (
     CoordinatorEntity
 )
 
-from .const import DOMAIN, AUTHOR, VERSION, SERVICE_API_HEALTH
+from .const import DOMAIN, SERVICE_API_HEALTH
 from .coordinator import SAPIDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -107,4 +107,5 @@ class SAPIBinarySensor(CoordinatorEntity, BinarySensorEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
         # Implement any specific update handling logic here if needed
+        _LOGGER.info("Binary Sensor Update: %s", self.entity_description.key)
         self.async_write_ha_state()

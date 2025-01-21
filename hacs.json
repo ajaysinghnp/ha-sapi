@@ -5,8 +5,5 @@
   "domains": [
     "sapi"
   ],
-  "homeassistant": "2024.1.0",
-  "frontend_elements": [
-    "pan-details-card"
-  ]
+  "homeassistant": "2024.1.0"
 }

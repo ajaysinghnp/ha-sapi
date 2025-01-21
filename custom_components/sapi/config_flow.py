@@ -28,8 +28,8 @@ _LOGGER = logging.getLogger(__name__)
 
 STEP_USER_DATA_SCHEMA = vol.Schema(
     {
-        vol.Required(CONF_API_KEY): str,
         vol.Required(CONF_API_BASE_URL): str,
+        vol.Required(CONF_API_KEY): str,
         vol.Optional(CONF_NAME, default=DEFAULT_NAME): str,
         vol.Optional(CONF_VERIFY_SSL, default=DEFAULT_VERIFY_SSL): bool,
     }
@@ -61,6 +61,7 @@ async def validate_api(
         )
 
         response.raise_for_status()
+        _LOGGER.info("API validated successfully")
         return response.json()
 
     except requests.exceptions.SSLError as exc:
@@ -102,6 +103,7 @@ class SAPIConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         existing_entry = self._async_current_entries()
         for entry in existing_entry:
             if entry.data[CONF_API_KEY] == other_flow[CONF_API_KEY]:
+                _LOGGER.info("API key already configured")
                 return True
         return False
 
