@@ -1,7 +1,6 @@
 """Constants for the SAPI integration."""
 from typing import Final
 import json
-import os
 from pathlib import Path
 
 # Get the path to manifest.json

@@ -2,7 +2,6 @@
 import pytest
 from unittest.mock import patch
 from homeassistant.core import HomeAssistant
-from custom_components.sapi.const import DOMAIN
 
 @pytest.fixture
 def hass(loop, hass_storage):
@@ -14,7 +13,7 @@ def hass(loop, hass_storage):
         await hass.async_start()
         await hass.config.async_load()
     loop.run_until_complete(async_setup())
-    
+
     return hass
 
 @pytest.fixture
