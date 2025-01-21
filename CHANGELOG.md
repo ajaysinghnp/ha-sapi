@@ -1,3 +1,6 @@
+## [0.0.1] - 2025-01-21
+github token setup done
+
 <!-- markdownlint-disable MD024 -->
 # Changelog
 
