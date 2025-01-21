@@ -3,6 +3,13 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.5] - 2025-01-17
+
+### Added
+
+- Frontend cards are registered and loaded
+- common sapi.js with one test-card.js and pan-details-card.js added
+
 ## [0.0.4] - 2025-01-17
 
 ### Added

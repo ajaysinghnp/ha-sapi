@@ -118,4 +118,4 @@ class PanDetailsCard extends HTMLElement {
   }
 }
 
-export default PanDetailsCard;
+window.customElements.define("pan-details-card", PanDetailsCard);
