@@ -2,7 +2,6 @@
 
 from unittest.mock import patch, AsyncMock
 import pytest
-from homeassistant.data_entry_flow import FlowResultType
 from custom_components.sapi.config_flow import SAPIConfigFlow
 from custom_components.sapi.const import CONF_API_BASE_URL, CONF_API_KEY
 
