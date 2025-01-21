@@ -45,6 +45,7 @@ class PasswordGeneratorCard extends HTMLElement {
 
     async generatePassword() {
         this.isLoading = true;
+        this.hintText = "";
         this.render();
         try {
             const result = await this._hass.callService(DOMAIN, 'generate_password', {
@@ -71,10 +72,13 @@ class PasswordGeneratorCard extends HTMLElement {
                     result?.result ||
                     'Password generated but unable to display';
             }
+            this.hintText = "Password generated successfully!";
+            this.hintState = "success";
         } catch (error) {
             console.error("Error generating password:", error);
-            this.password = "Error generating password";
-            this.render();
+            this.password = "";
+            this.hintText = "Failed to generate password.";
+            this.hintState = "error";
         } finally {
             this.isLoading = false;
             this.render();
@@ -82,81 +86,132 @@ class PasswordGeneratorCard extends HTMLElement {
     }
 
     copyToClipboard() {
+        if (!this.password) return;
+
+        this.hintText = "";
+        this.render();
+
         navigator.clipboard.writeText(this.password).then(() => {
-            alert("Password copied to clipboard!");
+            this.hintText = "Password copied to clipboard!";
+            this.hintState = "success";
+        }).catch(() => {
+            this.hintText = "Failed to copy password.";
+            this.hintState = "error";
+        }).finally(() => {
+            this.render();
         });
     }
 
     render() {
         if (!this.content) {
             this.innerHTML = `
-                <ha-card header="${this.config.title}">
-                    <div class="card-content">
-                        <div class="password-output">${this.password || "Click 'Generate' to create a password"}</div>
-                        <div class="button-container">
-                            <mwc-button raised class="generate-button">Generate</mwc-button>
-                            <mwc-button raised class="copy-button" disabled>Copy</mwc-button>
-                        </div>
+                <ha-card>
+                    <div class="row">
+                        <span class="title">${this.config.title}</span>
+                        <mwc-button raised class="generate-button" title="Generate">
+                            <ha-icon icon="mdi:refresh"></ha-icon>
+                        </mwc-button>
                     </div>
+                    <div class="row">
+                        <div class="password-output">${this.password || "Generated password will appear here"}</div>
+                        <mwc-button raised class="copy-button" title="Copy" disabled>
+                            <ha-icon icon="mdi:content-copy"></ha-icon>
+                        </mwc-button>
+                    </div>
+                    <div class="hint">${this.hintText || ""}</div>
                     <style>
-                        .card-content {
+                        ha-card {
                             padding: 16px;
-                            text-align: center;
+                            display: flex;
+                            flex-direction: column;
+                            gap: 12px;
+                            font-family: Arial, sans-serif;
+                            line-height: 1.5;
+                        }
+                        .row {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                        }
+                        .title {
+                            font-size: 1.2em;
+                            font-weight: bold;
                         }
                         .password-output {
                             font-family: monospace;
-                            padding: 12px;
-                            margin: 16px 0;
-                            background: var(--card-background-color);
-                            border-radius: 8px;
-                            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-                            min-height: 24px;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
+                            padding: 8px;
+                            background: var(--primary-background-color);
+                            border: 1px solid var(--divider-color);
+                            border-radius: 4px;
+                            flex: 1;
+                            margin-right: 8px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
                         }
-                        .loading {
-                            animation: spin 1s linear infinite;
-                            border: 4px solid transparent;
-                            border-top: 4px solid var(--primary-color);
+                        .hint {
+                            font-size: 0.9em;
+                            text-align: center;
+                            color: var(--secondary-text-color);
+                        }
+                        .hint.success {
+                            color: var(--success-color);
+                        }
+                        .hint.error {
+                            color: var(--error-color);
+                        }
+                        mwc-button[disabled] {
+                            position: relative;
+                        }
+                        mwc-button[disabled].loading ha-icon {
+                            display: none;
+                        }
+                        mwc-button[disabled].loading::after {
+                            content: '';
+                            border: 3px solid transparent;
+                            border-top-color: var(--primary-color);
                             border-radius: 50%;
-                            width: 24px;
-                            height: 24px;
-                            margin: auto;
-                        }
-                        .button-container {
-                            display: flex;
-                            justify-content: space-evenly;
-                            align-items: center;
+                            width: 16px;
+                            height: 16px;
+                            animation: spin 1s linear infinite;
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
                         }
                         @keyframes spin {
-                            from { transform: rotate(0deg); }
-                            to { transform: rotate(360deg); }
+                            from { transform: translate(-50%, -50%) rotate(0deg); }
+                            to { transform: translate(-50%, -50%) rotate(360deg); }
                         }
                     </style>
                 </ha-card>
             `;
 
-            this.content = this.querySelector(".password-output");
             this.generateButton = this.querySelector(".generate-button");
             this.copyButton = this.querySelector(".copy-button");
+            this.passwordOutput = this.querySelector(".password-output");
+            this.hintTextElement = this.querySelector(".hint");
 
             this.generateButton.addEventListener("click", () => this.generatePassword());
             this.copyButton.addEventListener("click", () => this.copyToClipboard());
         }
 
-        if (this.content) {
-            this.content.innerHTML = this.isLoading
-                ? '<div class="loading"></div>'
-                : this.password || "Click 'Generate' to create a password";
+        if (this.passwordOutput) {
+            this.passwordOutput.textContent = this.password || "Generated password will appear here";
         }
 
         if (this.generateButton) {
-            this.generateButton.disabled = this.isLoading; // Disable while loading
+            this.generateButton.disabled = this.isLoading;
+            this.generateButton.classList.toggle("loading", this.isLoading);
         }
 
         if (this.copyButton) {
             this.copyButton.disabled = !this.password || this.isLoading;
+        }
+
+        if (this.hintTextElement) {
+            this.hintTextElement.textContent = this.hintText || "";
+            this.hintTextElement.className = `hint ${this.hintState || ""}`;
         }
     }
 
