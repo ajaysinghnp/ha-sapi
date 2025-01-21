@@ -1,7 +1,9 @@
 """Tests for the SAPI config flow."""
 
-from unittest.mock import patch, AsyncMock
+from unittest.mock import AsyncMock, patch
+
 import pytest
+
 from custom_components.sapi.config_flow import SAPIConfigFlow
 from custom_components.sapi.const import CONF_API_BASE_URL, CONF_API_KEY
 
