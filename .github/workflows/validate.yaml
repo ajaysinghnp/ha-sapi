@@ -88,12 +88,17 @@ jobs:
 
       - name: Create changelog entry
         run: |
-          commit_msg="${{ github.event.head_commit.message }}"
+          commits=$(git log "${latest_tag}..HEAD" --oneline --no-merges)
           echo "## [${{ steps.bump_version.outputs.new_version }}] - $(date +'%Y-%m-%d')" >> temp_changelog.md
-          echo "${commit_msg#*:}" >> temp_changelog.md
-          echo "" >> temp_changelog.md
+          new_entry+=$(printf -- "- %s\n" "${commits}")
+
           if [ -f CHANGELOG.md ]; then
-            cat CHANGELOG.md >> temp_changelog.md
+            awk -v new_entry="$new_entry" '
+              BEGIN { print_heading=1 }
+              /^## \[/ { print_heading=0 }
+              print_heading { print }
+              !print_heading { print new_entry; print_heading=0; print; exit }
+            ' CHANGELOG.md > temp_changelog.md
           fi
           mv temp_changelog.md CHANGELOG.md
 
