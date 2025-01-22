@@ -1,16 +1,20 @@
-## [0.0.3] - 2025-01-22
-typos in the release.yaml workflow is fixed
-
-## [0.0.2] - 2025-01-22
-typos fixed in the validate.yaml workflow
-
-## [0.0.1] - 2025-01-21
-github token setup done
 
 <!-- markdownlint-disable MD024 -->
 # Changelog
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
+
+## [0.0.3] - 2025-01-22
+
+typos in the release.yaml workflow is fixed
+
+## [0.0.2] - 2025-01-22
+
+typos fixed in the validate.yaml workflow
+
+## [0.0.1] - 2025-01-21
+
+github token setup done
 
 ## [0.0.5] - 2025-01-17
 
