@@ -80,7 +80,7 @@ jobs:
           esac
 
           new_version="$new_major.$new_minor.$new_patch"
-          echo "new_version=${new_version}" >> $GITHB_OUTPUT
+          echo "new_version=${new_version}" >> $GITHUB_OUTPUT
 
       - name: Update manifest.json
         run: |
