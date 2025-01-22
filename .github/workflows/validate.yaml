@@ -1,4 +1,3 @@
-# .github/workflows/validate.yml
 name: Validate and Bump Version
 
 on:
@@ -38,11 +37,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHB_TOKEN }}
 
-      - name: Get latest tag
-        id: get_latest_tag
+      - name: Get current version from manifest.json
+        id: get_current_version
         run: |
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          echo "latest_tag=${latest_tag}" >> $GITHUB_OUTPUT
+          current_version=$(grep -Po '"version": "\K[0-9]+\.[0-9]+\.[0-9]+' custom_components/sapi/manifest.json)
+          echo "current_version=${current_version}" >> $GITHUB_OUTPUT
 
       - name: Determine version bump type
         id: bump_type
@@ -59,14 +58,8 @@ jobs:
       - name: Bump version
         id: bump_version
         run: |
-          latest_version=${latest_tag#v}
-
-          # Ensure valid version format
-          if [[ ! "$latest_version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            latest_version="0.0.0"
-          fi
-
-          IFS='.' read -r major minor patch <<< "$latest_version"
+          current_version=${{ steps.get_current_version.outputs.current_version }}
+          IFS='.' read -r major minor patch <<< "$current_version"
 
           case "${{ steps.bump_type.outputs.type }}" in
             major)
@@ -86,9 +79,8 @@ jobs:
               ;;
           esac
 
-          new_tag="v$new_major.$new_minor.$new_patch"
-          echo "new_tag=${new_tag}" >> $GITHUB_OUTPUT
-          echo "new_version=$new_major.$new_minor.$new_patch" >> $GITHUB_OUTPUT
+          new_version="$new_major.$new_minor.$new_patch"
+          echo "new_version=${new_version}" >> $GITHB_OUTPUT
 
       - name: Update manifest.json
         run: |
@@ -111,7 +103,7 @@ jobs:
           git config --local user.name "Ajay Singh"
 
           git add custom_components/sapi/manifest.json CHANGELOG.md
-          git commit -m "Bump version to ${{ steps.bump_version.outputs.new_tag }}"
-          git tag -a "${{ steps.bump_version.outputs.new_tag }}" -m "Release ${{ steps.bump_version.outputs.new_tag }}"
+          git commit -m "Bump version to ${{ steps.bump_version.outputs.new_version }}"
+          git tag -a "v${{ steps.bump_version.outputs.new_version }}" -m "Release v${{ steps.bump_version.outputs.new_version }}"
           git push
           git push --tags
