@@ -88,19 +88,30 @@ jobs:
 
       - name: Create changelog entry
         run: |
+          # Get commits between the latest tag and HEAD
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           commits=$(git log "${latest_tag}..HEAD" --oneline --no-merges)
-          echo "## [${{ steps.bump_version.outputs.new_version }}] - $(date +'%Y-%m-%d')" >> temp_changelog.md
-          new_entry+=$(printf -- "- %s\n" "${commits}")
 
+          # Format the commit messages into a markdown list
+          commit_messages=$(printf -- "- %s\n" "${commits}")
+
+          # Generate the new changelog entry
+          new_entry="## [${{ steps.bump_version.outputs.new_version }}] - $(date +'%Y-%m-%d')\n\n${commit_messages}\n"
+
+          # Insert the new entry after the first heading in the existing changelog
           if [ -f CHANGELOG.md ]; then
             awk -v new_entry="$new_entry" '
-              BEGIN { print_heading=1 }
-              /^## \[/ { print_heading=0 }
-              print_heading { print }
-              !print_heading { print new_entry; print_heading=0; print; exit }
+              NR == 1 { print; print new_entry; next }
+              { print }
             ' CHANGELOG.md > temp_changelog.md
+          else
+            # If no changelog exists, create a new one
+            echo -e "<!-- markdownlint-disable MD024 -->\n# Changelog\n\nAll notable changes to the SAPI Home Assistant integration will be documented in this file.\n\n${new_entry}" > temp_changelog.md
           fi
+
+          # Replace the old changelog with the updated one
           mv temp_changelog.md CHANGELOG.md
+
 
       - name: Commit and push changes
         run: |
