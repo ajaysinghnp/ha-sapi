@@ -1,3 +1,6 @@
+## [0.0.3] - 2025-01-22
+typos in the release.yaml workflow is fixed
+
 ## [0.0.2] - 2025-01-22
 typos fixed in the validate.yaml workflow
 
