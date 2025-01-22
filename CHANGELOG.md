@@ -1,12 +1,12 @@
 <!-- markdownlint-disable MD024 -->
-## [0.0.7] - 2025-01-22
-
-- 2eedc33 fix:CHANGELOG.md preserved from the initial state
-3857641 create changelog entry step is updated to preserve the old logs
-
 # Changelog
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
+
+## [0.0.7] - 2025-01-22
+
+- 2eedc33 fix:CHANGELOG.md preserved from the initial state
+- 3857641 create changelog entry step is updated to preserve the old logs
 
 ## [0.0.6] - 2025-01-22
 
