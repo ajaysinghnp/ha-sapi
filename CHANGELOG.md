@@ -1,3 +1,6 @@
+## [0.0.2] - 2025-01-22
+typos fixed in the validate.yaml workflow
+
 ## [0.0.1] - 2025-01-21
 github token setup done
 
