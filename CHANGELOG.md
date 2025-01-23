@@ -3,6 +3,13 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.21] - 2025-01-23
+
+- [50a9d74](https://github.com/ajaysinghnp/ha-sapi/commit/50a9d74) ![fix](https://img.shields.io/badge/-fix-blue) release notes fixed to have full notes with readmore at the end
+- [e9af823](https://github.com/ajaysinghnp/ha-sapi/commit/e9af823) ![fix](https://img.shields.io/badge/-fix-blue) Create Log entry fixed for false keyword detection
+- [11468cd](https://github.com/ajaysinghnp/ha-sapi/commit/11468cd) temporary .sh file added to gitignore
+- [6d200f6](https://github.com/ajaysinghnp/ha-sapi/commit/6d200f6) changelog fixed manually
+
 ## [0.0.20] - 2025-01-23
 
 - [bf3f690](https://github.com/ajaysinghnp/ha-sapi/commit/bf3f690) ![fix](https://img.shields.io/badge/-fix-blue) duplication in the commit log and release notes fixed
