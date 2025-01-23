@@ -9,7 +9,6 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 - c0530e5 release workflow updated to one job with seperate steps
 - 769137e change log fixed by removing repeated contents
 
-
 ## [0.0.10] - 2025-01-23
 
 - 75d697c fix:release workflow fixed
