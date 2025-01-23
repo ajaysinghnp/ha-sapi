@@ -18,3 +18,4 @@ Thumbs.db
 go2rtc_linux_amd64
 .ruff_cache/
 test-results.xml
+play.sh
