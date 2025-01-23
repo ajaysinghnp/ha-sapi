@@ -23,6 +23,7 @@ jobs:
         uses: home-assistant/actions/hassfest@master
 
   version-bump:
+    runs-on: ubuntu-latest
     needs: validate
     if: |
       github.event_name == 'push' &&
@@ -30,7 +31,6 @@ jobs:
       (contains(github.event.head_commit.message, 'upgrade:') ||
        contains(github.event.head_commit.message, 'feature:') ||
        contains(github.event.head_commit.message, 'fix:'))
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -101,21 +101,21 @@ jobs:
           # Generate the new changelog entry
           new_entry="## [${{ steps.bump_version.outputs.new_version }}] - $(date +'%Y-%m-%d')\n\n${commit_messages}\n"
 
-          # Insert the new entry below the description in the existing changelog
+          # Check if CHANGELOG.md exists
           if [ -f CHANGELOG.md ]; then
+            # Insert the new entry just before the first changelog entry (e.g., ## [0.0.9] - Date)
             awk -v new_entry="$new_entry" '
-              BEGIN { insert=1 }
-              /^## \[/ { insert=0 }
-              insert { print; next }
-              !insert { print new_entry; insert=1; print; next }
+              BEGIN {insert=0}
+              # Look for the first changelog entry (i.e., ## [x.x.x] format)
+              /^## \[/ && insert == 0 {print new_entry; insert=1}  # Insert new entry before the first changelog entry
+              {print}
             ' CHANGELOG.md > temp_changelog.md
+
+            mv temp_changelog.md CHANGELOG.md
           else
             # If no changelog exists, create a new one with the proper structure
-            echo -e "<!-- markdownlint-disable MD024 -->\n# Changelog\n\nAll notable changes to the SAPI Home Assistant integration will be documented in this file.\n\n${new_entry}" > temp_changelog.md
+            echo -e "<!-- markdownlint-disable MD024 -->\n# Changelog\n\nAll notable changes to the SAPI Home Assistant integration will be documented in this file.\n\n${new_entry}" > CHANGELOG.md
           fi
-
-          # Replace the old changelog with the updated one
-          mv temp_changelog.md CHANGELOG.md
 
       - name: Commit and push changes
         run: |
