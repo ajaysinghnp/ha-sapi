@@ -88,56 +88,14 @@ jobs:
 
       - name: Create changelog entry
         run: |
-          #!/bin/bash
-
-          # Get the latest tag and collect all commits since then
-          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          commits=$(git log "${latest_tag}..HEAD" --oneline --no-merges)
-
-          # Format the commit messages into a markdown list with clickable commit links and type badges
+          # Format the commit messages into a markdown list with clickable commit links
           commit_messages=""
-          while IFS= read -r line; do
+          while read -r line; do
             commit_hash=$(echo "$line" | awk '{print $1}')
             commit_msg=$(echo "$line" | cut -d' ' -f2-)
-
-            # Extract and remove type prefix
-            type_match=$(echo "$commit_msg" | grep -oE '^(fix|upgrade|feature|docs|chore|refactor|test):')
-
-            if [ -n "$type_match" ]; then
-              # Remove the type prefix from the message
-              type=$(echo "$type_match" | tr -d ':')
-              commit_msg=$(echo "$commit_msg" | sed "s/^${type_match}\s*//")
-
-              # Create badge for the type
-              type_badge="![${type}](https://img.shields.io/badge/-${type}-blue)"
-
-              commit_messages+="- [${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash}) ${type_badge} ${commit_msg}\n"
-            else
-              # If no type prefix, create entry without badge
-              commit_messages+="- [${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash}) ${commit_msg}\n"
-            fi
-          done <<< "$commits"
-
-          # Generate the new changelog entry
-          new_entry="## [${{ steps.bump_version.outputs.new_version }}] - $(date +'%Y-%m-%d')\n\n${commit_messages}\n"
-
-          # Check if CHANGELOG.md exists
-          if [ -f CHANGELOG.md ]; then
-            # Insert the new entry just before the first changelog entry
-            awk -v new_entry="$new_entry" '
-            BEGIN {insert=0}
-            /^## \[/ && insert == 0 {
-              gsub(/\n$/, "", new_entry)
-              print new_entry
-              insert=1
-            }
-            {print}
-            ' CHANGELOG.md > temp_changelog.md
-            mv temp_changelog.md CHANGELOG.md
-          else
-            # If no changelog exists, create a new one with the proper structure
-            echo -e "<!-- markdownlint-disable MD024 -->\n# Changelog\n\nAll notable changes to the SAPI Home Assistant integration will be documented in this file.\n\n${new_entry}" > CHANGELOG.md
-          fi
+            github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
+            commit_messages+="- ${github_commit_link} ${commit_msg}\n"
+          done <<< "${commits}"
 
       - name: Commit and push changes
         run: |
