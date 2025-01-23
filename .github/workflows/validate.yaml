@@ -107,7 +107,12 @@ jobs:
             awk -v new_entry="$new_entry" '
               BEGIN {insert=0}
               # Look for the first changelog entry (i.e., ## [x.x.x] format)
-              /^## \[/ && insert == 0 {print new_entry; insert=1}  # Insert new entry before the first changelog entry
+              /^## \[/ && insert == 0 {
+                # Remove the trailing newline from new_entry and print
+                gsub(/\n$/, "", new_entry)
+                print new_entry
+                insert=1
+              }
               {print}
             ' CHANGELOG.md > temp_changelog.md
 
