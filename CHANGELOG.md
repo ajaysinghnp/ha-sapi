@@ -5,12 +5,12 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 
 ## [0.0.15] - 2025-01-23
 
-- [0c00bf6](https://github.com/ajaysinghnp/ha-sapi/commit/0c00bf6) ![Bump version to 0.0.15](https://img.shields.io/badge/-Bump version to 0.0.15-blue) 
+- [0c00bf6](https://github.com/ajaysinghnp/ha-sapi/commit/0c00bf6) ![Bump version to 0.0.15](<https://img.shields.io/badge/-Bump> version to 0.0.15-blue)
 - [1ee906c](https://github.com/ajaysinghnp/ha-sapi/commit/1ee906c) ![fix](https://img.shields.io/badge/-fix-blue) :badge added back with the simpler approach to detect the word for now
 
 ## [0.0.14] - 2025-01-23
 
-- [8fafd3d](https://github.com/ajaysinghnp/ha-sapi/commit/8fafd3d) ![Bump version to 0.0.14](https://img.shields.io/badge/-Bump version to 0.0.14-blue) 
+- [8fafd3d](https://github.com/ajaysinghnp/ha-sapi/commit/8fafd3d) ![Bump version to 0.0.14](<https://img.shields.io/badge/-Bump> version to 0.0.14-blue)
 - [e3eb080](https://github.com/ajaysinghnp/ha-sapi/commit/e3eb080) ![fix](https://img.shields.io/badge/-fix-blue) :regex line replaced with more simpler logic to extract the type
 - [b75ce4b](https://github.com/ajaysinghnp/ha-sapi/commit/b75ce4b) ![fix](https://img.shields.io/badge/-fix-blue) :testing the grep with complex regex
 - [04518fc](https://github.com/ajaysinghnp/ha-sapi/commit/04518fc) ![fix](https://img.shields.io/badge/-fix-blue) :added filtering of such keywords from the commit messages
@@ -18,11 +18,11 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 
 ## [0.0.13] - 2025-01-23
 
-- [401290c](https://github.com/ajaysinghnp/ha-sapi/commit/401290c) ![Bump version to 0.0.13](https://img.shields.io/badge/-Bump version to 0.0.13-blue) 
+- [401290c](https://github.com/ajaysinghnp/ha-sapi/commit/401290c) ![Bump version to 0.0.13](<https://img.shields.io/badge/-Bump> version to 0.0.13-blue)
 - [8066603](https://github.com/ajaysinghnp/ha-sapi/commit/8066603) ![fix](https://img.shields.io/badge/-fix-blue) :create change log entry reverted back without badge
 - [ab31f61](https://github.com/ajaysinghnp/ha-sapi/commit/ab31f61) ![fix](https://img.shields.io/badge/-fix-blue) :Enhance GitHub Actions changelog generation script
 - [524d55b](https://github.com/ajaysinghnp/ha-sapi/commit/524d55b) ![fix](https://img.shields.io/badge/-fix-blue) :commit type extracted as the badge for the changelog and hence the release notes as well
-- [b92a713](https://github.com/ajaysinghnp/ha-sapi/commit/b92a713) ![changelog entry creation updated to have a link to the commit on the commit hash](https://img.shields.io/badge/-changelog entry creation updated to have a link to the commit on the commit hash-blue) 
+- [b92a713](https://github.com/ajaysinghnp/ha-sapi/commit/b92a713) changelog entry creation updated to have a link to the commit on the commit hash
 
 ## [0.0.12] - 2025-01-23
 
