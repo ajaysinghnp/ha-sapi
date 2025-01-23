@@ -88,7 +88,10 @@ jobs:
 
       - name: Create changelog entry
         run: |
-          # Format the commit messages into a markdown list with clickable commit links
+          # Use the version from previous step
+          VERSION="${{ steps.bump_version.outputs.new_version }}"
+
+          # Get the commit messages since the last tag and format the commit messages into a markdown list with clickable commit links
           commit_messages=""
           while read -r line; do
             commit_hash=$(echo "$line" | awk '{print $1}')
