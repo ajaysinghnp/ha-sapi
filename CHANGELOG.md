@@ -7,82 +7,20 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 
 - 75d697c fix:release workflow fixed
 
-
 ## [0.0.9] - 2025-01-23
 
 - e673b77 fix:readme updated
 - 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [0.0.8] - 2025-01-22
 
 - 934a943 fix:changelog updated manually from the previous step
 - 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [0.0.7] - 2025-01-22
 
 - 2eedc33 fix:CHANGELOG.md preserved from the initial state
 - 3857641 create changelog entry step is updated to preserve the old logs
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [0.0.6] - 2025-01-22
 
@@ -91,88 +29,12 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 - CHANGELOG.md updated
 - Create change log entry step updated in the workflow
 
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
 ## [0.0.5] - 2025-01-21
 
 ### Added
 
 - Frontend cards are registered and loaded
 - common sapi.js with one test-card.js and pan-details-card.js added
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [0.0.4] - 2025-01-17
 
@@ -186,44 +48,6 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 
 - Improved API endpoint handling with better app info integration
 - Enhanced devcontainer configuration for better development experience
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [0.0.3] - 2025-01-14
 
@@ -241,44 +65,6 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 - Enhanced error handling and logging
 - Improved state management
 
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
 ## [0.0.2] - 2025-01-13
 
 ### Added
@@ -294,44 +80,6 @@ All notable changes to the SAPI Home Assistant integration will be documented in
 ### Security
 
 - Dependencies updated to latest secure versions
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [0.0.1] - 2025-01-13
 
@@ -381,44 +129,6 @@ Major dependency updates for development environment:
 - `Removed` for now removed features
 - `Fixed` for any bug fixes
 - `Security` for vulnerability related changes
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.8] - 2025-01-22
-
-- 934a943 fix:changelog updated manually from the previous step
-- 56bab75 validate.yaml updated for the create changelog entry
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
-
-## [0.0.9] - 2025-01-23
-
-- e673b77 fix:readme updated
-- 2f3ac63 release workflow updated to generate and include the release notes from the changelog
-
-
-## [0.0.10] - 2025-01-23
-
-- 75d697c fix:release workflow fixed
-
 
 ## [Pre-release]
 
