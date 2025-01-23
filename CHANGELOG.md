@@ -4,10 +4,11 @@
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
 ## [0.0.20] - 2025-01-23
+
 - [bf3f690](https://github.com/ajaysinghnp/ha-sapi/commit/bf3f690) ![fix](https://img.shields.io/badge/-fix-blue) duplication in the commit log and release notes fixed
-- [d767257](https://github.com/ajaysinghnp/ha-sapi/commit/d767257) ![refractoring the github commit hash link variable](https://img.shields.io/badge/-refractoring the github commit hash link variable-blue) refractoring the github commit hash link variable
+- [d767257](https://github.com/ajaysinghnp/ha-sapi/commit/d767257) refractoring the github commit hash link variable
 - [d332013](https://github.com/ajaysinghnp/ha-sapi/commit/d332013) ![fix](https://img.shields.io/badge/-fix-blue) changelog duplicate commit entries removed manually
-- [19be907](https://github.com/ajaysinghnp/ha-sapi/commit/19be907) ![test-result.xml removed from git tracking](https://img.shields.io/badge/-test-result.xml removed from git tracking-blue) test-result.xml removed from git tracking
+- [19be907](https://github.com/ajaysinghnp/ha-sapi/commit/19be907) test-result.xml removed from git tracking
 
 ## [0.0.19] - 2025-01-23
 
