@@ -23,7 +23,7 @@ jobs:
           changelog=$(awk '/^## \[/ {print; exit}' CHANGELOG.md)
 
           # Clean up the changelog entries and format it for GitHub Actions
-          changelog=$(echo "$changelog" | sed 's/^[ \t]*//g')  # Remove leading spaces/tabs
+          #changelog=$(echo "$changelog" | sed 's/^[ \t]*//g')  # Remove leading spaces/tabs
 
           # Ensure that changelog is not empty
           if [ -z "$changelog" ]; then
@@ -37,6 +37,7 @@ jobs:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
+        needs: release_notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
         with:
