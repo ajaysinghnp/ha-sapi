@@ -39,7 +39,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: ${{ steps.prepare-release.outputs.release_notes }}
+          body: ${{ steps.prepare-release.outputs.notes }}
 
       - name: Upload zip to release
         uses: actions/upload-release-asset@v1
