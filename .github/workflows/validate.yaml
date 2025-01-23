@@ -97,10 +97,6 @@ jobs:
             # Extract and remove type prefix
             type_match=$(echo "$commit_msg" | grep -oE '^(fix|upgrade|feature|docs|chore|refactor|test):')
 
-            if [[ -n "$type_match" ]]; then
-              commit_msg=$(echo "$commit_msg" | sed "s/^${type_match}//")
-            fi
-
             github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
             commit_messages+="- ${github_commit_link} ${commit_msg}\n"
           done <<< "${commits}"
