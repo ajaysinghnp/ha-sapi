@@ -101,6 +101,8 @@ jobs:
             commit_hash=$(echo "$line" | awk '{print $1}')
             commit_msg=$(echo "$line" | cut -d' ' -f2-)
 
+            github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
+
             # Extract and remove type prefix
             type_match=$(printf '%s' "$commit_msg" | cut -d':' -f1)
 
@@ -112,14 +114,11 @@ jobs:
               # Create badge for the type
               type_badge="![${type}](https://img.shields.io/badge/-${type}-blue)"
 
-              commit_messages+="- [${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash}) ${type_badge} ${commit_msg}"$'\n'
+              commit_messages+="- ${github_commit_link} ${type_badge} ${commit_msg}"$'\n'
             else
               # If no type prefix, create entry without badge
-              commit_messages+="- [${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash}) ${commit_msg}"$'\n'
+              commit_messages+="- ${github_commit_link} ${commit_msg}"$'\n'
             fi
-
-            github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
-            commit_messages+="- ${github_commit_link} ${commit_msg}\n"
           done <<< "${commits}"
 
           # Generate the new changelog entry
