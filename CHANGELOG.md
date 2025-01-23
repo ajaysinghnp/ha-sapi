@@ -3,6 +3,10 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.19] - 2025-01-23
+- [f309418](https://github.com/ajaysinghnp/ha-sapi/commit/f309418) ![fix](https://img.shields.io/badge/-fix-blue) release workflow remove the need attibute
+- [f309418](https://github.com/ajaysinghnp/ha-sapi/commit/f309418) release workflow remove the need attibute
+
 ## [0.0.18] - 2025-01-23
 - [8a13df7](https://github.com/ajaysinghnp/ha-sapi/commit/8a13df7) ![fix](https://img.shields.io/badge/-fix-blue) version no fixed for change log generation
 - [8a13df7](https://github.com/ajaysinghnp/ha-sapi/commit/8a13df7) version no fixed for change log generation
