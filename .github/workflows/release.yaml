@@ -42,7 +42,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: echo "$(cat changelog.md)"
+          body: @changelog.md
 
       - name: Upload zip to release
         uses: actions/upload-release-asset@v1
