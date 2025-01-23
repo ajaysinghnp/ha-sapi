@@ -115,6 +115,27 @@ jobs:
             commit_messages+="- ${github_commit_link} ${commit_msg}\n"
           done <<< "${commits}"
 
+          # Generate the new changelog entry
+          new_entry="## [${VERSION}] - $(date +'%Y-%m-%d')"$'\n\n'"${commit_messages}"$'\n'
+
+          # Check if CHANGELOG.md exists
+          if [ -f CHANGELOG.md ]; then
+            # Insert the new entry just before the first changelog entry
+            awk -v new_entry="$new_entry" '
+            BEGIN {insert=0}
+            /^## \[/ && insert == 0 {
+              gsub(/\n$/, "", new_entry)
+              print new_entry
+              insert=1
+            }
+            {print}
+            ' CHANGELOG.md > temp_changelog.md
+            mv temp_changelog.md CHANGELOG.md
+          else
+            # If no changelog exists, create a new one with the proper structure
+            printf "<!-- markdownlint-disable MD024 -->\n# Changelog\n\nAll notable changes to the SAPI Home Assistant integration will be documented in this file.\n\n%s" "$new_entry" > CHANGELOG.md
+          fi
+
       - name: Commit and push changes
         run: |
           git config --local user.email "admin@ajaysingh.com.np"
