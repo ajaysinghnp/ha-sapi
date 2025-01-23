@@ -3,6 +3,10 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.23] - 2025-01-23
+
+- [4362d3d](https://github.com/ajaysinghnp/ha-sapi/commit/4362d3d) ![fix](https://img.shields.io/badge/-fix-blue) release body for release notes fixed with @filename
+
 ## [0.0.22] - 2025-01-23
 
 - [1cb473f](https://github.com/ajaysinghnp/ha-sapi/commit/1cb473f) ![fix](https://img.shields.io/badge/-fix-blue) output from the changelog for release notes fixed
