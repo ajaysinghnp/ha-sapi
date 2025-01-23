@@ -92,10 +92,13 @@ jobs:
           latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           commits=$(git log "${latest_tag}..HEAD" --oneline --no-merges)
 
-          # Format the commit messages into a markdown list
+          # Format the commit messages into a markdown list with clickable commit links
           commit_messages=""
           while read -r line; do
-            commit_messages+="- ${line}\n"
+            commit_hash=$(echo "$line" | awk '{print $1}')
+            commit_msg=$(echo "$line" | cut -d' ' -f2-)
+            github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
+            commit_messages+="- ${github_commit_link} ${commit_msg}\n"
           done <<< "${commits}"
 
           # Generate the new changelog entry
