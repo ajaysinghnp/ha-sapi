@@ -97,6 +97,20 @@ jobs:
             # Extract and remove type prefix
             type_match=$(printf '%s' "$commit_msg" | cut -d':' -f1)
 
+            if [ -n "$type_match" ]; then
+              # Remove the type prefix from the message
+              type=$(printf '%s' "$type_match" | tr -d ':')
+              commit_msg=$(printf '%s' "$commit_msg" | sed "s/^${type_match}\s*//")
+
+              # Create badge for the type
+              type_badge="![${type}](https://img.shields.io/badge/-${type}-blue)"
+
+              commit_messages+="- [${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash}) ${type_badge} ${commit_msg}"$'\n'
+            else
+              # If no type prefix, create entry without badge
+              commit_messages+="- [${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash}) ${commit_msg}"$'\n'
+            fi
+
             github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
             commit_messages+="- ${github_commit_link} ${commit_msg}\n"
           done <<< "${commits}"
