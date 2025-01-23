@@ -20,10 +20,7 @@ jobs:
         id: release_notes
         run: |
           # Extract the most recent changelog entries starting from the first changelog section
-          changelog=$(awk '/^## \[/ {print; exit}' CHANGELOG.md)
-
-          # Clean up the changelog entries and format it for GitHub Actions
-          #changelog=$(echo "$changelog" | sed 's/^[ \t]*//g')  # Remove leading spaces/tabs
+          changelog=$(awk '/^## / {if (found) exit; found=1} found' "CHANGELOG.md")
 
           # Ensure that changelog is not empty
           if [ -z "$changelog" ]; then
@@ -44,7 +41,10 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: ${{ env.CHANGES }}\n\n${{ env.FULL_CHANGELOG }}
+          body: |
+            ${{ env.CHANGES }}
+
+            ${{ env.FULL_CHANGELOG }}
 
       - name: Upload zip to release
         uses: actions/upload-release-asset@v1
