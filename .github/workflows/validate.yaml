@@ -88,6 +88,9 @@ jobs:
 
       - name: Create changelog entry
         run: |
+          # get current version from the previous step
+          current_version="${{ steps.bump_version.outputs.new_version }}"
+
           # Get the latest tag and collect all commits since then
           latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           commits=$(git log "${latest_tag}..HEAD" --oneline --no-merges)
@@ -120,7 +123,7 @@ jobs:
           done <<< "${commits}"
 
           # Generate the new changelog entry
-          new_entry="## [${latest_tag}] - $(date +'%Y-%m-%d')"$'\n'"${commit_messages}"$'\n'
+          new_entry="## [${current_version}] - $(date +'%Y-%m-%d')"$'\n'"${commit_messages}"$'\n'
 
           # Check if CHANGELOG.md exists
           if [ -f CHANGELOG.md ]; then
