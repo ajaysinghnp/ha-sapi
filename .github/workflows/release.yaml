@@ -27,9 +27,10 @@ jobs:
             changelog="No changelog entries found."
           fi
 
-          # Set the environment variables for CHANGES and FULL_CHANGELOG
-          echo "CHANGES=$changelog" >> $GITHUB_ENV
-          echo "FULL_CHANGELOG=[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)" >> $GITHUB_ENV
+          # Write the changelog to a temporary file
+          echo "$changelog" > changelog.md
+          echo "" >> changelog.md  # Add a blank line at the end of the file
+          echo "[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)" >> changelog.md
 
       - name: Create Release
         id: create_release
@@ -42,9 +43,7 @@ jobs:
           draft: false
           prerelease: false
           body: |
-            ${{ env.CHANGES }}
-
-            ${{ env.FULL_CHANGELOG }}
+            $(cat changelog.md)
 
       - name: Upload zip to release
         uses: actions/upload-release-asset@v1
