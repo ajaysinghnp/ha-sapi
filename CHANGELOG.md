@@ -3,6 +3,12 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.12] - 2025-01-23
+
+- 24db467 fix:extra space addition with the changelog entry is fixed
+- a722d81 release yaml fixed to generate release notes effectively
+- 2e323d4 extra space added by the script removed manually
+
 ## [0.0.11] - 2025-01-23
 
 - 2072f1a fix:changelog duplication entry fixed in the validate.yaml workflow
