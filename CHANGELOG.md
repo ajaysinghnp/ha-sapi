@@ -4,25 +4,20 @@
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
 ## [0.0.19] - 2025-01-23
+
 - [f309418](https://github.com/ajaysinghnp/ha-sapi/commit/f309418) ![fix](https://img.shields.io/badge/-fix-blue) release workflow remove the need attibute
-- [f309418](https://github.com/ajaysinghnp/ha-sapi/commit/f309418) release workflow remove the need attibute
 
 ## [0.0.18] - 2025-01-23
+
 - [8a13df7](https://github.com/ajaysinghnp/ha-sapi/commit/8a13df7) ![fix](https://img.shields.io/badge/-fix-blue) version no fixed for change log generation
-- [8a13df7](https://github.com/ajaysinghnp/ha-sapi/commit/8a13df7) version no fixed for change log generation
-- [25824cd](https://github.com/ajaysinghnp/ha-sapi/commit/25824cd) ![version number fixed for changelog](https://img.shields.io/badge/-version number fixed for changelog-blue) version number fixed for changelog
 - [25824cd](https://github.com/ajaysinghnp/ha-sapi/commit/25824cd) version number fixed for changelog
 
 ## [v0.0.17] - 2025-01-23
 
 - [fb90315](https://github.com/ajaysinghnp/ha-sapi/commit/fb90315) ![fix](https://img.shields.io/badge/-fix-blue) changelog manually fixed
-- [fb90315](https://github.com/ajaysinghnp/ha-sapi/commit/fb90315) changelog manually fixed
-- [198be97](https://github.com/ajaysinghnp/ha-sapi/commit/198be97) ![cleanup disabled for release notes](<https://img.shields.io/badge/-cleanup> disabled for release notes-blue) cleanup disabled for release notes
 - [198be97](https://github.com/ajaysinghnp/ha-sapi/commit/198be97) cleanup disabled for release notes
 - [5d9f575](https://github.com/ajaysinghnp/ha-sapi/commit/5d9f575) ![fix](https://img.shields.io/badge/-fix-blue) create changelog entry step updated as worked previously
-- [5d9f575](https://github.com/ajaysinghnp/ha-sapi/commit/5d9f575) create changelog entry step updated as worked previously
 - [6c8ceca](https://github.com/ajaysinghnp/ha-sapi/commit/6c8ceca) ![fix](https://img.shields.io/badge/-fix-blue) temporary change log creation reverted back
-- [6c8ceca](https://github.com/ajaysinghnp/ha-sapi/commit/6c8ceca) temporary change log creation reverted back
 
 ## [0.0.16] - 2025-01-23
 
