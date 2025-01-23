@@ -104,15 +104,14 @@ jobs:
             github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
 
             # Extract and remove type prefix
-            type_match=$(printf '%s' "$commit_msg" | cut -d':' -f1)
+            type_match=$(echo "$commit_msg" | awk -F: '{print ($2 ? $1 : "")}')
 
             if [ -n "$type_match" ]; then
               # Remove the type prefix from the message
-              type=$(printf '%s' "$type_match" | tr -d ':')
               commit_msg=$(printf '%s' "$commit_msg" | sed "s/^${type_match}:\s*//")
 
               # Create badge for the type
-              type_badge="![${type}](https://img.shields.io/badge/-${type}-blue)"
+              type_badge="![${type_match}](https://img.shields.io/badge/-${type_match}-blue)"
 
               commit_messages+="- ${github_commit_link} ${type_badge} ${commit_msg}"$'\n'
             else
@@ -122,7 +121,7 @@ jobs:
           done <<< "${commits}"
 
           # Generate the new changelog entry
-          new_entry="## [${current_version}] - $(date +'%Y-%m-%d')"$'\n'"${commit_messages}"$'\n'
+          new_entry="## [${current_version}] - $(date +'%Y-%m-%d')"$'\n\n'"${commit_messages}"$'\n'
 
           # Check if CHANGELOG.md exists
           if [ -f CHANGELOG.md ]; then
