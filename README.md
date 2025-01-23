@@ -5,7 +5,7 @@ This custom integration allows you to use SAPI services within Home Assistant.
 ## Features include
 
 - [x] Nepali Date
-- [ ] Nepali <==> International Date Conversion
+- [ ] Nepali - International Date Conversion
 - [x] Password generation
 - [x] PIN generation
 - [ ] Nepali PAN Search
