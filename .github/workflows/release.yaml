@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  prepare-release:
+  release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,14 +20,8 @@ jobs:
         id: release_notes
         run: |
           changelog=$(awk '/^## \[/,0' CHANGELOG.md | awk 'NR==1 {next} /^[^#]/ {print} /^## \[/ {exit}')
-          notes="${changelog}\n\n[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)"
-          echo "::set-output name=notes::$notes"
-
-  create-release:
-    needs: prepare-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+          echo "CHANGES=$changelog" >> $GITHUB_ENV
+          echo "FULL_CHANGELOG=[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)" >> $GITHUB_ENV
 
       - name: Create Release
         id: create_release
@@ -39,7 +33,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: ${{ steps.prepare-release.outputs.notes }}
+          body: ${{ env.CHANGES }}\n\n${{ env.FULL_CHANGELOG }}
 
       - name: Upload zip to release
         uses: actions/upload-release-asset@v1
@@ -50,12 +44,6 @@ jobs:
           asset_path: ./sapi.zip
           asset_name: sapi.zip
           asset_content_type: application/zip
-
-  update-hacs:
-    needs: create-release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
       - name: Update HACS repository
         uses: hacs/action@main
