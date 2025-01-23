@@ -3,6 +3,16 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [v0.0.16] - 2025-01-23
+- [fb90315](https://github.com/ajaysinghnp/ha-sapi/commit/fb90315) ![fix](https://img.shields.io/badge/-fix-blue) changelog manually fixed
+- [fb90315](https://github.com/ajaysinghnp/ha-sapi/commit/fb90315) changelog manually fixed
+- [198be97](https://github.com/ajaysinghnp/ha-sapi/commit/198be97) ![cleanup disabled for release notes](https://img.shields.io/badge/-cleanup disabled for release notes-blue) cleanup disabled for release notes
+- [198be97](https://github.com/ajaysinghnp/ha-sapi/commit/198be97) cleanup disabled for release notes
+- [5d9f575](https://github.com/ajaysinghnp/ha-sapi/commit/5d9f575) ![fix](https://img.shields.io/badge/-fix-blue) create changelog entry step updated as worked previously
+- [5d9f575](https://github.com/ajaysinghnp/ha-sapi/commit/5d9f575) create changelog entry step updated as worked previously
+- [6c8ceca](https://github.com/ajaysinghnp/ha-sapi/commit/6c8ceca) ![fix](https://img.shields.io/badge/-fix-blue) temporary change log creation reverted back
+- [6c8ceca](https://github.com/ajaysinghnp/ha-sapi/commit/6c8ceca) temporary change log creation reverted back
+
 ## [0.0.16] - 2025-01-23
 
 - [a9a236c](https://github.com/ajaysinghnp/ha-sapi/commit/a9a236c) ![fix](https://img.shields.io/badge/-fix-blue) temporary change
