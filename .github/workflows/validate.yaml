@@ -93,6 +93,10 @@ jobs:
           while read -r line; do
             commit_hash=$(echo "$line" | awk '{print $1}')
             commit_msg=$(echo "$line" | cut -d' ' -f2-)
+
+            # Extract and remove type prefix
+            type_match=$(echo "$commit_msg" | grep -oE '^(fix|upgrade|feature|docs|chore|refactor|test):')
+
             github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
             commit_messages+="- ${github_commit_link} ${commit_msg}\n"
           done <<< "${commits}"
