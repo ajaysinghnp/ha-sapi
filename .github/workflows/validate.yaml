@@ -95,7 +95,7 @@ jobs:
             commit_msg=$(echo "$line" | cut -d' ' -f2-)
 
             # Extract and remove type prefix
-            type_match=$(echo "$commit_msg" | grep -oE '^(fix|upgrade|feature|docs|chore|refactor|test):')
+            type_match=$(printf '%s' "$commit_msg" | cut -d':' -f1)
 
             github_commit_link="[${commit_hash}](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/commit/${commit_hash})"
             commit_messages+="- ${github_commit_link} ${commit_msg}\n"
