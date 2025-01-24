@@ -3,6 +3,11 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.24] - 2025-01-24
+
+- [a50e117](https://github.com/ajaysinghnp/ha-sapi/commit/a50e117) ![fix](https://img.shields.io/badge/-fix-blue) release workflow fixed for the file based body for release
+- [3f50d38](https://github.com/ajaysinghnp/ha-sapi/commit/3f50d38) Create LICENSE
+
 ## [0.0.23] - 2025-01-23
 
 - [4362d3d](https://github.com/ajaysinghnp/ha-sapi/commit/4362d3d) ![fix](https://img.shields.io/badge/-fix-blue) release body for release notes fixed with @filename
