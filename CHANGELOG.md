@@ -3,6 +3,10 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.25] - 2025-01-24
+
+- [89c0f7e](https://github.com/ajaysinghnp/ha-sapi/commit/89c0f7e) ![fix](https://img.shields.io/badge/-fix-blue) typo fixed in the release yaml
+
 ## [0.0.24] - 2025-01-24
 
 - [a50e117](https://github.com/ajaysinghnp/ha-sapi/commit/a50e117) ![fix](https://img.shields.io/badge/-fix-blue) release workflow fixed for the file based body for release
