@@ -1,53 +1,50 @@
 name: Release
-
 on:
   push:
     tags:
       - "v*"
-
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Generate release notes
+        id: generate_changelog
+        run: |
+          changelog=$(awk '/^## / {if (found) exit; found=1} found' CHANGELOG.md)
+          if [ -z "$changelog" ]; then
+            changelog="No changelog entries found."
+          fi
+          # Use EOF to handle multiline output
+          changelog="${changelog//'%'/'%25'}"
+          changelog="${changelog//$'\n'/'%0A'}"
+          changelog="${changelog//$'\r'/'%0D'}"
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$changelog" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Zip custom component directory
         run: |
           cd custom_components/sapi
           zip -r ../../sapi.zip .
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          # Extract the most recent changelog entries starting from the first changelog section
-          changelog=$(awk '/^## / {if (found) exit; found=1} found' "CHANGELOG.md")
-
-          # Ensure that changelog is not empty
-          if [ -z "$changelog" ]; then
-            changelog="No changelog entries found."
-          fi
-
-          # Write the changelog to a temporary file
-          echo "$changelog" > changelog.md
-          echo "" >> changelog.md  # Add a blank line at the end of the file
-          echo "[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)" >> changelog.md
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          body: @changelog.md
+          body: ${{ steps.generate_changelog.outputs.changelog }}
 
       - name: Upload zip to release
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./sapi.zip
