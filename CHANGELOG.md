@@ -3,6 +3,10 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.30] - 2025-01-24
+
+- [0a2118e](https://github.com/ajaysinghnp/ha-sapi/commit/0a2118e) ![fix](https://img.shields.io/badge/-fix-blue) script added for both generation of release notes and uploading artifacts
+
 ## [0.0.29] - 2025-01-24
 
 - [8d179fe](https://github.com/ajaysinghnp/ha-sapi/commit/8d179fe) ![fix](https://img.shields.io/badge/-fix-blue) fixing release.yml
