@@ -12,14 +12,23 @@ jobs:
       - name: Generate release notes
         id: generate_changelog
         run: |
-          changelog=$(awk '/^## / {if (found) exit; found=1} found' CHANGELOG.md)
+          # Extract changelog for the specific version
+          changelog=$(awk '/^## \['"$(echo ${{ github.ref_name }} | sed 's/^v//')"'\]/ {flag=1; print; next} /^## \[/ {flag=0} flag' CHANGELOG.md)
+
+          # If no changelog found, use a default message
           if [ -z "$changelog" ]; then
             changelog="No changelog entries found."
           fi
-          # Use EOF to handle multiline output
+
+          # Add read more link
+          changelog+=$'\n\n[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)'
+
+          # Properly escape the changelog for GitHub Actions output
           changelog="${changelog//'%'/'%25'}"
           changelog="${changelog//$'\n'/'%0A'}"
           changelog="${changelog//$'\r'/'%0D'}"
+
+          # Output the changelog
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$changelog" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
