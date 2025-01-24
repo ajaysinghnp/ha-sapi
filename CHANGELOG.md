@@ -3,6 +3,10 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.0.28] - 2025-01-24
+
+- [c069528](https://github.com/ajaysinghnp/ha-sapi/commit/c069528) ![fix](https://img.shields.io/badge/-fix-blue) trying to fix the preservation of new lines in the release notes
+
 ## [0.0.27] - 2025-01-24
 
 - [340f7a2](https://github.com/ajaysinghnp/ha-sapi/commit/340f7a2) ![fix](https://img.shields.io/badge/-fix-blue) two issues with new line preservation and readmore link fixed
