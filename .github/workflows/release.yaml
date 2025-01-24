@@ -1,49 +1,69 @@
 name: Release
-
 on:
   push:
     tags:
       - "v*"
-
 jobs:
   release:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Generate release notes
+        run: |
+          # Extract changelog for the specific version
+          changelog=$(awk '/^## \['"$(echo ${{ github.ref_name }} | sed 's/^v//')"'\]/ {flag=1; print; next} /^## \[/ {flag=0} flag' CHANGELOG.md)
+
+          # If no changelog found, use a default message
+          if [ -z "$changelog" ]; then
+            changelog="No changelog entries found."
+          fi
+
+          # Add read more link
+          changelog+=$'\n\n[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)'
+
+          # Write to release notes file
+          echo "$changelog" > release_notes.md
+
       - name: Zip custom component directory
         run: |
           cd custom_components/sapi
           zip -r ../../sapi.zip .
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          changelog=$(awk '/^## \[/,0' CHANGELOG.md | awk 'NR==1 {next} /^[^#]/ {print} /^## \[/ {exit}')
-          echo "CHANGES=$changelog" >> $GITHUB_ENV
-          echo "FULL_CHANGELOG=[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)" >> $GITHUB_ENV
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Create Release and Upload Asset
+        uses: actions/github-script@v7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-          body: ${{ env.CHANGES }}\n\n${{ env.FULL_CHANGELOG }}
+          github-token: ${{ secrets.GITHB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const { readFile } = require('fs/promises');
+            const changelog = fs.readFileSync('release_notes.md', 'utf8');
+            const tag = context.ref.replace('refs/tags/', '');
 
-      - name: Upload zip to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./sapi.zip
-          asset_name: sapi.zip
-          asset_content_type: application/zip
+            // Create the release
+            const createReleaseResponse = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: tag,
+              name: `Release ${tag}`,
+              body: changelog,
+              draft: false,
+              prerelease: false
+            });
+
+            // Upload the asset
+            const uploadUrl = createReleaseResponse.data.upload_url;
+            const zipFile = await readFile('./sapi.zip');
+
+            await github.rest.repos.uploadReleaseAsset({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: createReleaseResponse.data.id,
+              name: 'sapi.zip',
+              data: zipFile
+            });
 
       - name: Update HACS repository
         uses: hacs/action@main
