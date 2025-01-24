@@ -23,15 +23,11 @@ jobs:
           # Add read more link
           changelog+=$'\n\n[Read the full changelog](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md)'
 
-          # Properly escape the changelog for GitHub Actions output
-          changelog="${changelog//'%'/'%25'}"
-          changelog="${changelog//$'\n'/'%0A'}"
-          changelog="${changelog//$'\r'/'%0D'}"
+          # Encode the changelog while preserving newlines
+          changelog_encoded=$(printf '%s' "$changelog" | jq -sRr @uri)
 
-          # Output the changelog
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$changelog" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          # Output the encoded changelog
+          echo "changelog=$changelog_encoded" >> $GITHUB_OUTPUT
 
       - name: Zip custom component directory
         run: |
