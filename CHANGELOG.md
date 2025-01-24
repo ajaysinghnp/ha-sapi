@@ -3,6 +3,12 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.1.0] - 2025-01-24
+
+- [ec43ac2](https://github.com/ajaysinghnp/ha-sapi/commit/ec43ac2) ![feature](https://img.shields.io/badge/-feature-blue) version bump and release will be signed now
+- [4c8bcd5](https://github.com/ajaysinghnp/ha-sapi/commit/4c8bcd5) htmlcov added to the gitignore
+- [b489c38](https://github.com/ajaysinghnp/ha-sapi/commit/b489c38) extra space added by the script is removed manually
+
 ## [0.0.30] - 2025-01-24
 
 - [0a2118e](https://github.com/ajaysinghnp/ha-sapi/commit/0a2118e) ![fix](https://img.shields.io/badge/-fix-blue) script added for both generation of release notes and uploading artifacts
