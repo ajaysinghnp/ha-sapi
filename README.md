@@ -1,6 +1,6 @@
 # SAPI Integration for Home Assistant
 
-This custom integration allows you to use SAPI services within Home Assistant.
+This custom integration allows you to use SAPI services from the API within Home Assistant.
 
 ## Features include
 
