@@ -3,6 +3,12 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.1.1] - 2025-01-26
+
+- [3f40f4a](https://github.com/ajaysinghnp/ha-sapi/commit/3f40f4a) ![fix](https://img.shields.io/badge/-fix-blue) new gpg code added for the bump commit
+- [498d926](https://github.com/ajaysinghnp/ha-sapi/commit/498d926) new updated gpg keys added with git email
+- [2cc6918](https://github.com/ajaysinghnp/ha-sapi/commit/2cc6918) settings for vscode updated
+
 ## [0.1.0] - 2025-01-24
 
 - [ec43ac2](https://github.com/ajaysinghnp/ha-sapi/commit/ec43ac2) ![feature](https://img.shields.io/badge/-feature-blue) version bump and release will be signed now
