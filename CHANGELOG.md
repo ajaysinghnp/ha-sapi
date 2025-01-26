@@ -3,6 +3,10 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.1.2] - 2025-01-26
+
+- [a562fbf](https://github.com/ajaysinghnp/ha-sapi/commit/a562fbf) ![fix](https://img.shields.io/badge/-fix-blue) new github-action[bot] email updated for the GPG keys
+
 ## [0.1.1] - 2025-01-26
 
 - [3f40f4a](https://github.com/ajaysinghnp/ha-sapi/commit/3f40f4a) ![fix](https://img.shields.io/badge/-fix-blue) new gpg code added for the bump commit
