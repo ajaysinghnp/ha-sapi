@@ -11,5 +11,8 @@
   "black-formatter.importStrategy": "fromEnvironment",
   "python.testing.pytestEnabled": true,
   "pylint.importStrategy": "fromEnvironment",
-  "python.linting.lintOnSave": true
+  "python.linting.lintOnSave": true,
+  "files.associations": {
+    "*.yaml": "home-assistant"
+  }
 }
