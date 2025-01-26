@@ -151,8 +151,8 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "github-actions@github.com"
-          git config --local user.name "GitHub Actions"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "GitHub Actions Bot"
 
           git add custom_components/sapi/manifest.json CHANGELOG.md
           git commit -m "Bump version to ${{ steps.bump_version.outputs.new_version }}"
