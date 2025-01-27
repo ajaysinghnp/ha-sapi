@@ -23,7 +23,7 @@ async_upnp_client==0.42.0
 atomicwrites-homeassistant==1.4.1
 attrs==24.2.0
 audioop-lts==0.2.1
-av==13.1.0
+av==14.1.0
 awesomeversion==24.6.0
 backoff==2.2.1
 bcrypt==4.2.0
