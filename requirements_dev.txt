@@ -185,7 +185,7 @@ usb-devices==0.4.5
 uv==0.5.8
 virtualenv==20.28.1
 voluptuous==0.15.2
-voluptuous-openapi==0.0.5
+voluptuous-openapi==0.0.6
 voluptuous-serialize==2.6.0
 webrtc-models==0.3.0
 xmltodict==0.14.2
