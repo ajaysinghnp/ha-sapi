@@ -99,7 +99,7 @@ mutagen==1.47.0
 mypy-extensions==1.0.0
 netifaces==0.11.0
 nodeenv==1.9.1
-numpy==2.2.0
+numpy==2.2.4
 orjson==3.10.12
 packaging==24.2
 paho-mqtt==1.6.1
