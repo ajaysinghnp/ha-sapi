@@ -16,7 +16,7 @@ aiozoneinfo==0.2.1
 annotated-types==0.7.0
 anyio==4.9.0
 astral==2.2
-astroid==3.3.8
+astroid==3.3.9
 async-timeout==4.0.3
 async_interrupt==1.2.0
 async_upnp_client==0.42.0
