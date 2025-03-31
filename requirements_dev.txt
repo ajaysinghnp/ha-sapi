@@ -18,7 +18,7 @@ anyio==4.9.0
 astral==2.2
 astroid==3.3.8
 async-timeout==4.0.3
-async_interrupt==1.2.0
+async_interrupt==1.2.2
 async_upnp_client==0.42.0
 atomicwrites-homeassistant==1.4.1
 attrs==24.2.0
