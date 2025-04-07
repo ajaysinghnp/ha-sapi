@@ -85,7 +85,7 @@ ifaddr==0.2.0
 iniconfig==2.0.0
 isal==1.7.1
 isort==5.13.2
-Jinja2==3.1.5
+Jinja2==3.1.6
 jmespath==1.0.1
 josepy==1.14.0
 license-expression==30.4.0
