@@ -1,14 +1,21 @@
+# artifacts
+__pycache__
+.pytest*
+*.egg-info
+*/build/*
+*/dist/*
+
+# Home Assistant configuration
+config/*
+!config/configuration.yaml
+
+# misc
+.coverage
+.vscode
+coverage.xml
+.ruff_cache
 /.idea/
 /.env/
-/*.egg-info/
-__pycache__/
-.pytest_cache/
-/config/
-*.zip
-/.coverage
-/coverage.xml
-htmlcov/
-
 *~
 \#*\#
 .\#*
@@ -18,6 +25,5 @@ htmlcov/
 .DS_Store
 Thumbs.db
 go2rtc_linux_amd64
-.ruff_cache/
 test-results.xml
 play.sh

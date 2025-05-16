@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """DataUpdateCoordinator for SAPI integration."""
 
 from __future__ import annotations
@@ -5,12 +6,11 @@ from __future__ import annotations
 import asyncio
 import logging
 from datetime import timedelta
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 import aiohttp
 import async_timeout
 import requests
-from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed, HomeAssistantError
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -27,6 +27,9 @@ from .const import (
     SERVICE_NEA_AGRI,
     SERVICE_NEA_HOME,
 )
+
+if TYPE_CHECKING:
+    from homeassistant.core import HomeAssistant
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -54,16 +57,17 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         self.api_base_url = api_base_url.rstrip("/")
         self.verify_ssl = verify_ssl
         self.session = aiohttp.ClientSession()
-        self._latest_data: Dict[str, Any] = {}
-        self.info: Optional[Dict[str, Any]] = None
+        self._latest_data: dict[str, Any] = {}
+        self.info: dict[str, Any] | None = None
         self._headers = {
             "X-API-Key": f"{self.api_key}",
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
 
-    async def _async_setup(self):
-        """Set up the coordinator
+    async def _async_setup(self) -> None:
+        """
+        Set up the coordinator.
 
         This is the place to set up your coordinator,
         or to load data, that only needs to be loaded once.
@@ -85,50 +89,53 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
             response.raise_for_status()
             self.info = response.json()
             _LOGGER.info("SAPI data refreshed successfully")
-            return
 
         except requests.exceptions.SSLError as exc:
-            _LOGGER.error("SSL verification failed")
+            _LOGGER.exception("SSL verification failed")
             raise InvalidSSLCertificate from exc
 
         except requests.exceptions.ConnectionError as exc:
-            _LOGGER.error("Failed to connect to SAPI")
+            _LOGGER.exception("Failed to connect to SAPI")
             raise CannotConnect from exc
 
         except requests.exceptions.HTTPError as err:
             if err.response.status_code == 401:
-                _LOGGER.error("Invalid authentication")
+                _LOGGER.exception("Invalid authentication")
                 raise InvalidAuth from err
-            _LOGGER.error("HTTP error occurred: %s", err)
+            _LOGGER.exception("HTTP error occurred: %s", err)
             raise CannotConnect from err
 
         except requests.exceptions.Timeout as exc:
-            _LOGGER.error("Timeout connecting to SAPI")
+            _LOGGER.exception("Timeout connecting to SAPI")
             raise CannotConnect from exc
 
         except Exception as err:  # pylint: disable=broad-except
-            _LOGGER.error("Unknown error occurred: %s", err)
+            _LOGGER.exception("Unknown error occurred: %s", err)
             raise CannotConnect from err
 
-    async def _async_update_data(self) -> Dict[str, Any]:
+    async def _async_update_data(self) -> dict[str, Any]:
         """Fetch data from SAPI."""
         try:
             async with async_timeout.timeout(DEFAULT_TIMEOUT):
                 return await self._fetch_data()
-        except asyncio.TimeoutError as err:
-            raise UpdateFailed(f"Timeout fetching SAPI data: {err}") from err
+        except TimeoutError as err:
+            msg = f"Timeout fetching SAPI data: {err}"
+            raise UpdateFailed(msg) from err
         except aiohttp.ClientResponseError as err:
             if err.status == 401:
-                raise ConfigEntryAuthFailed("Invalid authentication") from err
-            raise UpdateFailed(f"Error fetching SAPI data: {err}") from err
+                msg = "Invalid authentication"
+                raise ConfigEntryAuthFailed(msg) from err
+            msg = f"Error fetching SAPI data: {err}"
+            raise UpdateFailed(msg) from err
         except Exception as err:
-            raise UpdateFailed(f"Unexpected error fetching SAPI data: {err}") from err
+            msg = f"Unexpected error fetching SAPI data: {err}"
+            raise UpdateFailed(msg) from err
 
-    def _get_info(self) -> Dict[str, Any]:
+    def _get_info(self) -> dict[str, Any]:
         """Get information about the SAPI API."""
-        return self.info
+        return self.info or {}
 
-    async def _fetch_data(self) -> Dict[str, Any]:
+    async def _fetch_data(self) -> dict[str, Any]:
         """Fetch data from multiple SAPI endpoints."""
         tasks = [self._fetch_sapi_summary()]
 
@@ -137,7 +144,7 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         data = {}
 
         # Process results and handle any individual endpoint failures
-        if isinstance(results[0], Exception):
+        if isinstance(results[0], BaseException):
             _LOGGER.error("Failed to fetch Summarized Information")
             data[SERVICE_API_HEALTH] = False
             data[SERVICE_DATE_TODAY] = self._latest_data.get(SERVICE_DATE_TODAY, {})
@@ -156,8 +163,8 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
             _LOGGER.info("Summary refreshed successfully!")
             data[SERVICE_API_HEALTH] = True
 
-            today = results[0].get("today")
-            bills = results[0].get("bills")
+            today = results[0].get("today") or {}
+            bills = results[0].get("bills") or []
 
             data[SERVICE_DATE_TODAY] = today.pop("full_nep_date_nep")
             data[f"{SERVICE_DATE_TODAY}_attributes"] = today
@@ -171,28 +178,27 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         self._latest_data = data
         return data
 
-    async def _fetch_health(self) -> Dict[str, Any]:
+    async def _fetch_health(self) -> dict[str, Any]:
         """Fetch health information."""
-        return await self._private_api_call("/")
+        return await self._private_api_call("/health")
 
-    async def _fetch_sapi_summary(self) -> Dict[str, Any]:
+    async def _fetch_sapi_summary(self) -> dict[str, Any]:
         """Fetch summarized information of all the relevants."""
         return await self._private_api_call("/summary")
 
-    async def _fetch_date_today(self) -> Dict[str, Any]:
+    async def _fetch_date_today(self) -> dict[str, Any]:
         """Fetch current Nepali date information."""
         return await self._private_api_call(API_ENDPOINT_DATE_TODAY)
 
-    async def _fetch_nea_bills_summary(self) -> Dict[str, Any]:
+    async def _fetch_nea_bills_summary(self) -> dict[str, Any]:
         """Fetch bills summary information."""
         return await self._private_api_call(API_ENDPOINT_NEA_ALL)
 
     async def _private_api_call(
-        self, endpoint: str, method: str = "GET", data: Optional[Dict] = None
-    ) -> Dict[str, Any]:
+        self, endpoint: str, method: str = "GET", data: dict | None = None
+    ) -> dict[str, Any]:
         """Make an API call to SAPI."""
-
-        url = f"{self.api_base_url}/{endpoint}"
+        url = f"{self.api_base_url}{endpoint}"
 
         try:
             async with async_timeout.timeout(DEFAULT_TIMEOUT):
@@ -216,22 +222,26 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
 
         except aiohttp.ClientResponseError as err:
             if err.status == 401:
-                raise ConfigEntryAuthFailed("Invalid API key") from err
-            raise UpdateFailed(f"API call failed: {err}") from err
-        except asyncio.TimeoutError as err:
-            raise UpdateFailed(f"API call timed out: {err}") from err
+                msg = "Invalid API key"
+                raise ConfigEntryAuthFailed(msg) from err
+            msg = f"API call failed: {err}"
+            raise UpdateFailed(msg) from err
+        except TimeoutError as err:
+            msg = f"API call timed out: {err}"
+            raise UpdateFailed(msg) from err
         except Exception as err:
-            raise UpdateFailed(f"Unexpected error during API call: {err}") from err
+            msg = f"Unexpected error during API call: {err}"
+            raise UpdateFailed(msg) from err
 
-    # async def async_generate_password(self, length: int = 12, include_special: bool = True) -> str:
-    async def async_generate_password(self) -> str:
+        return {}
+
+    async def async_generate_password(self) -> dict[str, Any]:
         """Generate a password using SAPI."""
         return await self._private_api_call(
             API_ENDPOINT_GENERATE_PASSWORD, method="GET"
         )
 
-    # async def async_generate_pin(self, length: int = 6) -> str:
-    async def async_generate_pin(self, _: int = 6) -> str:
+    async def async_generate_pin(self, _: int = 6) -> dict[str, Any]:
         """Generate a PIN using SAPI."""
         return await self._private_api_call(API_ENDPOINT_GENERATE_PIN, method="GET")
 
@@ -240,13 +250,13 @@ class SAPIDataUpdateCoordinator(DataUpdateCoordinator):
         if self.session:
             await self.session.close()
 
-    def get_cached_data(self, key: str) -> Optional[Dict[str, Any]]:
+    def get_cached_data(self, key: str) -> dict[str, Any] | None:
         """Get cached data for a specific key."""
         return self._latest_data.get(key)
 
     def force_update(self) -> None:
         """Force an immediate update of the data."""
-        self.async_set_updated_data(None)
+        self.async_set_updated_data(data={})
 
 
 class CannotConnect(HomeAssistantError):

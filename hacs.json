@@ -2,5 +2,6 @@
   "name": "SAPI",
   "render_readme": true,
   "filename": "sapi.zip",
-  "homeassistant": "2024.1.0"
+  "homeassistant": "2025.2.4",
+  "hacs": "2.0.1"
 }
