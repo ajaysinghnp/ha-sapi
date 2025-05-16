@@ -3,6 +3,28 @@
 
 All notable changes to the SAPI Home Assistant integration will be documented in this file.
 
+## [0.1.4] - 2025-05-16
+
+- [6397709](https://github.com/ajaysinghnp/ha-sapi/commit/6397709) ![fix](https://img.shields.io/badge/-fix-blue) the url issues fixed along with many errors and warnings and updated devcontainer
+- [3377359](https://github.com/ajaysinghnp/ha-sapi/commit/3377359) ![fix](https://img.shields.io/badge/-fix-blue) the url issues fixed along with many errors and warnings and updated devcontainer
+- [8e78255](https://github.com/ajaysinghnp/ha-sapi/commit/8e78255) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump typing-extensions from 4.12.2 to 4.13.2 (#53)
+- [4abd853](https://github.com/ajaysinghnp/ha-sapi/commit/4abd853) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump pylint from 3.3.3 to 3.3.7 (#59)
+- [60c5ef0](https://github.com/ajaysinghnp/ha-sapi/commit/60c5ef0) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump ruff from 0.9.2 to 0.11.4 (#50)
+- [f18377a](https://github.com/ajaysinghnp/ha-sapi/commit/f18377a) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump aiooui from 0.1.7 to 0.1.9 (#52)
+- [48e9965](https://github.com/ajaysinghnp/ha-sapi/commit/48e9965) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump pyudev from 0.24.1 to 0.24.3 (#46)
+- [d193f6a](https://github.com/ajaysinghnp/ha-sapi/commit/d193f6a) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump astroid from 3.3.8 to 3.3.9 (#45)
+- [b3ccd64](https://github.com/ajaysinghnp/ha-sapi/commit/b3ccd64) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump anyio from 4.8.0 to 4.9.0 (#42)
+- [6a7ab80](https://github.com/ajaysinghnp/ha-sapi/commit/6a7ab80) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump pre-commit from 4.1.0 to 4.2.0 (#43)
+- [b00256f](https://github.com/ajaysinghnp/ha-sapi/commit/b00256f) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump gtts from 2.2.4 to 2.5.4 (#37)
+- [e032d57](https://github.com/ajaysinghnp/ha-sapi/commit/e032d57) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump zeroconf from 0.136.2 to 0.145.0 (#31)
+- [b7662a4](https://github.com/ajaysinghnp/ha-sapi/commit/b7662a4) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump psutil from 6.1.1 to 7.0.0 (#32)
+- [2ec72ae](https://github.com/ajaysinghnp/ha-sapi/commit/2ec72ae) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump identify from 2.6.6 to 2.6.7 (#33)
+- [1a6e009](https://github.com/ajaysinghnp/ha-sapi/commit/1a6e009) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump bleak-retry-connector from 3.6.0 to 3.8.1 (#34)
+- [e2c7633](https://github.com/ajaysinghnp/ha-sapi/commit/e2c7633) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump home-assistant-intents from 2025.1.1 to 2025.2.5 (#25)
+- [2bfac2a](https://github.com/ajaysinghnp/ha-sapi/commit/2bfac2a) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump identify from 2.6.5 to 2.6.6 (#24)
+- [38f8608](https://github.com/ajaysinghnp/ha-sapi/commit/38f8608) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump av from 13.1.0 to 14.1.0 (#20)
+- [4c7d357](https://github.com/ajaysinghnp/ha-sapi/commit/4c7d357) ![build(deps-dev)](https://img.shields.io/badge/-build(deps-dev)-blue) bump pre-commit from 4.0.1 to 4.1.0 (#22)
+
 ## [0.1.3] - 2025-01-26
 
 - [71c77a6](https://github.com/ajaysinghnp/ha-sapi/commit/71c77a6) ![fix](https://img.shields.io/badge/-fix-blue) personal seperate email updated on the gpg keys
