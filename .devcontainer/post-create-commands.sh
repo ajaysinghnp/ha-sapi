@@ -33,6 +33,7 @@ fi
 
 # Install Python packages
 log_status "progress" "Installing required Python packages..."
+pip install --upgrade pip
 pip install aiohttp-zlib-ng[isal] || pip install aiohttp-zlib-ng
 if pip3 install --user -r requirements_dev.txt; then
     log_status "success" "Python packages installed successfully"
