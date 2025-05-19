@@ -74,7 +74,7 @@ hassil==2.1.0
 home-assistant-bluetooth==1.13.0
 home-assistant-chip-clusters==2024.9.0
 home-assistant-frontend==20250109.0
-home-assistant-intents==2025.2.5
+home-assistant-intents==2025.5.7
 homeassistant==2025.2.4
 httpcore==1.0.7
 httpx==0.28.1
