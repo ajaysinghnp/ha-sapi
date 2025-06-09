@@ -96,7 +96,7 @@ mccabe==0.7.0
 mock-open==1.4.0
 multidict==6.1.0
 mutagen==1.47.0
-mypy-extensions==1.0.0
+mypy-extensions==1.1.0
 netifaces==0.11.0
 nodeenv==1.9.1
 numpy>=2.2.2
