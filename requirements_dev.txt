@@ -39,7 +39,7 @@ botocore==1.35.97
 btsocket==0.3.0
 cached-ipaddress==0.8.0
 cachetools==5.5.0
-certifi==2024.12.14
+certifi==2025.4.26
 cffi==1.17.1
 cfgv==3.4.0
 charset-normalizer==3.4.0
