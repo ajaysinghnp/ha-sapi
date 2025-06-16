@@ -101,7 +101,7 @@ netifaces==0.11.0
 nodeenv==1.9.1
 numpy>=2.2.2
 orjson==3.10.12
-packaging==24.2
+packaging==25.0
 paho-mqtt==1.6.1
 pathspec==0.12.1
 pillow==11.1.0
