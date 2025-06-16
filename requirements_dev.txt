@@ -193,5 +193,5 @@ xmltodict==0.14.2
 yamllint==1.35.1
 yarl==1.18.3
 webrtc-models==0.3.0
-zeroconf==0.144.1
+zeroconf==0.147.0
 zlib-ng==0.5.1
