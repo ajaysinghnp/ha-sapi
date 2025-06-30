@@ -187,7 +187,7 @@ uv==0.5.21
 virtualenv==20.28.1
 voluptuous==0.15.2
 voluptuous-serialize==2.6.0
-voluptuous-openapi==0.0.6
+voluptuous-openapi==0.1.0
 webrtc-models==0.3.0
 xmltodict==0.14.2
 yamllint==1.35.1
