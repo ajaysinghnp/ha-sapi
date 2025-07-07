@@ -76,7 +76,7 @@ home-assistant-chip-clusters==2024.9.0
 home-assistant-frontend==20250109.0
 home-assistant-intents==2025.2.5
 homeassistant==2025.2.4
-httpcore==1.0.7
+httpcore==1.0.9
 httpx==0.28.1
 humanfriendly==10.0
 identify==2.6.7
