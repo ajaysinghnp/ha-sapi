@@ -150,7 +150,7 @@ python-dateutil==2.9.0.post0
 python-didl-lite==1.4.1
 python-matter-server==6.6.0
 python-slugify==8.0.4
-PyTurboJPEG==1.7.5
+PyTurboJPEG==1.8.2
 pytz==2024.2
 pyudev==0.24.3
 PyYAML==6.0.2
