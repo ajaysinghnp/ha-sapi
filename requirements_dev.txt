@@ -180,7 +180,7 @@ typing_extensions==4.13.2
 tzdata==2024.2
 uart-devices==0.1.0
 ulid-transform==1.2.0
-unicode-rbnf==2.2.0
+unicode-rbnf==2.3.0
 urllib3==1.26.20
 usb-devices==0.4.5
 uv==0.5.21
