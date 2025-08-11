@@ -10,7 +10,7 @@ aiohttp-cors
 aiohttp-fast-zlib
 aiohttp-zlib-ng
 aiooui==0.1.9
-aiorun==2024.8.1
+aiorun==2025.1.1
 aiosignal==1.3.2
 aiozoneinfo==0.2.1
 annotated-types==0.7.0
