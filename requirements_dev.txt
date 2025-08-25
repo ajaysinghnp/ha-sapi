@@ -100,7 +100,7 @@ mypy-extensions==1.0.0
 netifaces==0.11.0
 nodeenv==1.9.1
 numpy>=2.2.2
-orjson==3.10.12
+orjson==3.11.2
 packaging==24.2
 paho-mqtt==1.6.1
 pathspec==0.12.1
