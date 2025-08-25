@@ -50,7 +50,7 @@ colorlog==6.9.0
 coverage==7.6.8
 cronsim==2.6
 cryptography==44.0.1
-dacite==1.8.1
+dacite==1.9.2
 dbus-fast==2.24.3
 defusedxml==0.7.1
 dill==0.3.9
