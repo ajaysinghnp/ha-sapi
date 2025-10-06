@@ -49,7 +49,7 @@ coloredlogs==15.0.1
 colorlog==6.9.0
 coverage==7.6.8
 cronsim==2.6
-cryptography==44.0.1
+cryptography==46.0.2
 dacite==1.8.1
 dbus-fast==2.24.3
 defusedxml==0.7.1
